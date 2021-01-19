@@ -6,6 +6,7 @@ void main() {
 
 //test commint
 //second
+//third comment
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
