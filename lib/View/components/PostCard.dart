@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:usm/Models/PostModel.dart';
+import 'package:usm_mobile/Models/CommentModel.dart';
+import 'package:usm_mobile/Models/PostModel.dart';
+import 'package:usm_mobile/View/components/CommentsSheet.dart';
 
 class PostCard extends StatelessWidget {
   final Post post;
   PostCard({Key key, this.post}) : super(key: key);
+
+  openCommentsSheet() {
+    List<Comment> comments = this.post.commentArr;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -53,7 +60,7 @@ class PostCard extends StatelessWidget {
                         children: [
                           Flexible(
                             child: Text(
-                              this.post.description != null
+                              this.post.description != ''
                                   ? this.post.description
                                   : 'Default Description',
                               style: TextStyle(
@@ -77,14 +84,29 @@ class PostCard extends StatelessWidget {
                         this.post.duration + 'ago',
                         style: TextStyle(fontSize: 10),
                       ),
-                      Text(
-                        (this.post.likes != 0
-                                ? '${this.post.likes} likes '
-                                : '') +
-                            (this.post.comments != 0
-                                ? '${this.post.comments} comments'
-                                : ''),
-                        style: TextStyle(fontSize: 10),
+                      Row(
+                        children: [
+                          this.post.likes != 0
+                              ? Text(
+                                  '${this.post.likes} likes',
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                  ),
+                                )
+                              : Text(''),
+                          this.post.comments != 0
+                              ? GestureDetector(
+                                  child: Text(
+                                    ' ${this.post.comments} comments',
+                                    style: TextStyle(fontSize: 10),
+                                  ),
+                                  onTap: () => showModalBottomSheet(
+                                      context: context,
+                                      builder: (ctx) => CommentsSheet(
+                                          ctx, this.post.commentArr)),
+                                )
+                              : Text(''),
+                        ],
                       ),
                     ],
                   ),

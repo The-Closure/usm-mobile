@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
-import '../Models/PostModel.dart';
-import '../Repositories/PostRepo.dart';
+
+import 'package:get/get.dart';
+import 'package:usm_mobile/Models/PostModel.dart';
+import 'package:usm_mobile/Repositories/PostRepo.dart';
 
 class PostController extends GetxController {
   List<Post> postsList = [];

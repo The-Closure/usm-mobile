@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:usm/Models/PostModel.dart';
-import 'package:usm/Repositories/Constants.dart';
+import 'package:usm_mobile/Models/PostModel.dart';
+import 'package:usm_mobile/Repositories/Constants.dart';
 import 'package:http/http.dart' as http;
 
 class PostRepo {
@@ -16,7 +16,6 @@ class PostRepo {
       print('done');
       return posts;
     } else {
-      print("${response.statusCode}");
       return null;
     }
   }
