@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:usm_app/View/pages/Login.dart';
+import '../pages/Login.dart';
 import 'package:usm_app/View/pages/board_page.dart';
 import 'package:usm_app/View/pages/community_page.dart';
 import 'package:usm_app/View/pages/interface_pro.dart';

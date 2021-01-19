@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:usm_mobile/View/components/LoginForm.dart';
-import 'package:usm_mobile/View/components/RegisterForm.dart';
+import 'package:usm/View/components/LoginForm.dart';
+import 'package:usm/View/components/RegisterForm.dart';
 
 class Login extends StatefulWidget {
   Login({Key key}) : super(key: key);

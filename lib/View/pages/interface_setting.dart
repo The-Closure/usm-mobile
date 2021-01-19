@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:usm_mobile/view/components/CustomAppBar.dart';
-import 'package:usm_mobile/view/components/custom_background.dart';
-import 'package:usm_mobile/view/components/custom_circle_avatar.dart';
-import 'package:usm_mobile/view/components/custom_shape_circle.dart';
-import 'package:usm_mobile/view/components/custom_text_field.dart';
-import 'package:usm_mobile/view/components/tiles.dart';
+import 'package:usm/view/components/CustomAppBar.dart';
+import 'package:usm/view/components/custom_background.dart';
+import 'package:usm/view/components/custom_circle_avatar.dart';
+import 'package:usm/view/components/custom_shape_circle.dart';
+import 'package:usm/view/components/custom_text_field.dart';
+import 'package:usm/view/components/tiles.dart';
 
 class InterfaceSetting extends StatefulWidget {
   final selected;

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-//import 'package:usm_mobile/Controllers/BoardController.dart';
-//import 'package:usm_mobile/Controllers/SearchController.dart';
-// import 'package:usm_mobile/Models/BoardModel.dart';
-// import 'package:usm_mobile/Repositories/BoardRepo.dart';
+//import 'package:usm/Controllers/BoardController.dart';
+//import 'package:usm/Controllers/SearchController.dart';
+// import 'package:usm/Models/BoardModel.dart';
+// import 'package:usm/Repositories/BoardRepo.dart';
 
 class SearchField extends StatelessWidget {
   @override

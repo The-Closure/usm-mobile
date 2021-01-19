@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:usm_mobile/Controllers/PostController.dart';
-import 'package:usm_mobile/Models/PostModel.dart';
-import 'package:usm_mobile/View/components/PostCard.dart';
-import 'package:usm_mobile/View/components/PostCardDivider.dart';
+import 'package:usm/Controllers/PostController.dart';
+import 'package:usm/Models/PostModel.dart';
+import 'package:usm/View/components/PostCard.dart';
+import 'package:usm/View/components/PostCardDivider.dart';
 
 class PostCardsListView extends StatefulWidget {
   PostCardsListView({Key key}) : super(key: key);

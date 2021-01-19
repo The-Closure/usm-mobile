@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:usm_mobile/View/components/tiles.dart';
+import 'package:usm/View/components/tiles.dart';
 import '../components/SearchUI.dart';
 
 import '../components/side_bar.dart';
