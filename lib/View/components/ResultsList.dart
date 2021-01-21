@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 // import 'package:usm-mobile/View/components/tiles.dart';
 import 'package:get/get.dart';
+import '../../Controllers/SearchController.dart';
 
 // import 'package:usm-mobile/Controllers/BoardController.dart';
 // import 'package:usm-mobile/Controllers/SearchController.dart';

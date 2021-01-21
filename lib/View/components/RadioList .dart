@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:usm/Controllers/SearchController.dart';
+//import 'package:usm/Controllers/SearchController.dart';
+import '../../Controllers/SearchController.dart';
 
 class RadioList extends StatefulWidget {
   @override

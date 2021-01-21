@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../Controllers/SearchController.dart';
 //import 'package:usm/Controllers/BoardController.dart';
 //import 'package:usm/Controllers/SearchController.dart';
 // import 'package:usm/Models/BoardModel.dart';

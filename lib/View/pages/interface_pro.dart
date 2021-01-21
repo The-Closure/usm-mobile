@@ -2,14 +2,14 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:usm_app/Controllers/UserController.dart';
-import 'package:usm_app/Models/user_model.dart';
-import 'package:usm_app/View/components/CustomAppBar.dart';
-import 'package:usm_app/View/components/custom_background.dart';
-import 'package:usm_app/View/components/custom_circle_avatar.dart';
-import 'package:usm_app/View/components/custom_text.dart';
-import 'package:usm_app/View/components/side_bar.dart';
-import 'package:usm_app/View/components/tiles.dart';
+import '../../Controllers/UserController.dart';
+import '../../Models/user_model.dart';
+import '../components/CustomAppBar.dart';
+import '../components/custom_background.dart';
+import '../components/custom_circle_avatar.dart';
+import '../components/custom_text.dart';
+import '../components/side_bar.dart';
+import '../components/tiles.dart';
 
 class InterFacePro extends StatefulWidget {
   final selected;

@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:get/get.dart';
-import 'package:usm/Repositories/BoardRepo.dart';
-import 'package:usm/Repositories/UserRepo.dart';
-import 'package:usm/Repositories/communityRepo.dart';
+import '../Repositories/BoardRepo.dart';
+import '../Repositories/UserRepo.dart';
+import '../Repositories/communityRepo.dart';
 
 class SearchController extends GetxController {
   bool user = true;
@@ -18,19 +18,18 @@ class SearchController extends GetxController {
 
   searchControl(String value) async {
     search_result = [];
-    if(value != '')
-    {
+    if (value != '') {
       if (user) {
-      search_result += await userRepo.search(value);
+        search_result += await userRepo.search(value);
+      }
+      if (board) {
+        search_result += await boardRepo.search(value);
+      }
+      if (community) {
+        search_result += await communityRepo.search(value);
+      }
     }
-    if (board) {
-      search_result += await boardRepo.search(value);
-    }
-    if (community) {
-      search_result += await communityRepo.search(value);
-    }
-    }
-    
+
     update();
   }
 }
