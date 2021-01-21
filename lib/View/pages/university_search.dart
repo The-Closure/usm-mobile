@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:usm_mobile/Controllers/UniversityController.dart';
+import 'package:usm_mobile/View/components/side_bar.dart';
+import 'package:usm_mobile/View/components/university.dart';
 
 import '../components/custom_appbar.dart';
-import '../components/side_bar.dart';
+import '../components/university.dart';
 import '../components/university.dart';
 
 class University_Search extends StatefulWidget {
@@ -14,26 +17,20 @@ class University_Search extends StatefulWidget {
 
 // ignore: camel_case_types
 class _University_SearchState extends State<University_Search> {
-  List<University> universityList = [University(), University(), University()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(),
-      body: SingleChildScrollView(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            new Side_bar(selected: 2),
-            Container(
-              width: Get.width * 0.8,
-              padding: EdgeInsets.only(top: 30),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: universityList),
-            ),
-          ],
-        ),
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Side_bar(selected: 2),
+          Container(
+            width: Get.width * 0.8,
+            padding: EdgeInsets.only(top: 30),
+            child: University(),
+          ),
+        ],
       ),
     );
   }

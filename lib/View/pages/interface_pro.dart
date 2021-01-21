@@ -2,19 +2,19 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../Controllers/UserController.dart';
-import '../../Models/user_model.dart';
-import '../components/CustomAppBar.dart';
-import '../components/custom_background.dart';
-import '../components/custom_circle_avatar.dart';
-import '../components/custom_text.dart';
-import '../components/side_bar.dart';
-import '../components/tiles.dart';
+import 'package:usm_mobile/Controllers/UserController.dart';
+import 'package:usm_mobile/Models/user_model.dart';
+import 'package:usm_mobile/View/components/custom_background.dart';
+import 'package:usm_mobile/View/components/custom_circle_avatar.dart';
+import 'package:usm_mobile/View/components/custom_text.dart';
+import 'package:usm_mobile/View/components/tiles.dart';
+
+import '../components/custom_appbar.dart';
 
 class InterFacePro extends StatefulWidget {
   final selected;
 
-  InterFacePro({Key key, this.selected}) : super(key: key);
+  InterFacePro({Key key, @required this.selected}) : super(key: key);
 
   @override
   _InterFaceProState createState() => _InterFaceProState();
@@ -22,18 +22,17 @@ class InterFacePro extends StatefulWidget {
 
 class _InterFaceProState extends State<InterFacePro> {
   UserController userController;
-  UserModel v;
+  UserModel u;
   @override
   void initState() {
     // TODO: implement initState
     userController = Get.find(tag: 'userController');
-    v = userController.userinfo;
+    u = userController.userinfo;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    Get.put(UserController());
     final mq = MediaQuery.of(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -42,13 +41,68 @@ class _InterFaceProState extends State<InterFacePro> {
         //backgroundColor: Colors.amber,
         body: Stack(
           children: [
-            CustomBackGround(image_back: 'assets/images/p2.png'),
+            CustomBackGround(),
             SingleChildScrollView(
-              child:
-                  Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                new Side_bar(selected: 3),
-              ]),
+              child: Container(
+                width: Get.width * 0.2,
+                color: Color.fromARGB(255, 67, 66, 93),
+                height: Get.height,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SingleChildScrollView(
+                      child: Container(
+                        width: Get.width,
+                        padding: EdgeInsets.only(top: 30),
+                        color: Color.fromARGB(255, 60, 59, 84),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              height: 24,
+                              width: 24,
+                              child: Image(
+                                  image: AssetImage(
+                                "assets/images/logo.png",
+                                // height: 100,
+                              )),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              "USM",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: "Segoe",
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              "UNIVERSITY",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: "Segoe",
+                                fontSize: 9,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Tiles(
+                      selected: widget.selected ?? 6,
+                    ),
+                  ],
+                ),
+              ),
             ),
+            //
+
             Container(
               margin: EdgeInsets.only(
                 left: mq.size.width * 0.25,
@@ -64,33 +118,21 @@ class _InterFaceProState extends State<InterFacePro> {
                       SizedBox(
                         height: 28,
                       ),
-                      GetBuilder<UserController>(
-                        //speci/fy type as Controller
-                        // init: UserController(), // intialize with the Controller
-                        builder: (userController) => CustomText(
-                          text: "${v.name}",
-                          // value is an instance of Controller
-                          //text: u.name,
-                          color: new Color(0Xff939393),
-                          fontWeight: FontWeight.bold,
-                        ),
+                      CustomText(
+                        text: u.name,
+                        color: new Color(0Xff939393),
+                        fontWeight: FontWeight.bold,
                       ),
-                      GetBuilder<UserController>(
-                        builder: (userController) => CustomText(
-                          text: "${v.communityName}",
-                          color: new Color(0Xff939393),
-                          fontWeight: FontWeight.bold,
-                        ),
+                      CustomText(
+                        text: "Age : ${u.age} ",
+                        color: new Color(0Xff939393),
+                        fontWeight: FontWeight.bold,
                       ),
-                      GetBuilder<UserController>(
-                        // v = userController.userinfo,
-
-                        builder: (userController) => CustomText(
-                          text: "${v.email}",
-                          color: new Color(0Xff939393),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13,
-                        ),
+                      CustomText(
+                        text: u.email,
+                        color: new Color(0Xff939393),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 13,
                       ),
                     ],
                   ),

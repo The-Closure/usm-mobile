@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:usm/view/components/CustomAppBar.dart';
-import 'package:usm/view/components/custom_background.dart';
-import 'package:usm/view/components/custom_circle_avatar.dart';
-import 'package:usm/view/components/custom_shape_circle.dart';
-import 'package:usm/view/components/custom_text_field.dart';
-import 'package:usm/view/components/tiles.dart';
+
+import '../components/custom_appbar.dart';
+import '../components/custom_background.dart';
+import '../components/custom_circle_avatar.dart';
+import '../components/custom_shape_circle.dart';
+import '../components/custom_text_field.dart';
+import '../components/side_bar.dart';
+import '../components/tiles.dart';
 
 class InterfaceSetting extends StatefulWidget {
-  final selected;
-  InterfaceSetting({Key key, @required this.selected}) : super(key: key);
+  InterfaceSetting({Key key}) : super(key: key);
 
   @override
   _InterfaceSettingState createState() => _InterfaceSettingState();
@@ -26,76 +27,7 @@ class _InterfaceSettingState extends State<InterfaceSetting> {
         //backgroundColor: Colors.amber,
         body: Stack(
           children: [
-            Row(
-              children: [
-                SingleChildScrollView(
-                  child: Container(
-                    width: Get.width * 0.2,
-                    color: Color.fromARGB(255, 67, 66, 93),
-                    height: Get.height,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          width: Get.width,
-                          padding: EdgeInsets.only(top: 30),
-                          color: Color.fromARGB(255, 60, 59, 84),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                height: 24,
-                                width: 24,
-                                child: Image(
-                                    image: AssetImage(
-                                      "assets/images/logo.png",
-                                      // height: 100,
-                                    )),
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Text(
-                                "USM",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: "Segoe",
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                "UNIVERSITY",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: "Segoe",
-                                  fontSize: 9,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                            ],
-                          ),
-                        ),
-                        Tiles(
-                          selected: widget.selected ?? 6,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                // Container(
-                //   width: Get.width * 0.8,
-                //   child: Text(
-                //     " هون حطو \n القصص تبعكن و تركو width*0.8 ",
-                //     style: TextStyle(
-                //       fontSize: 48,
-                //     ),
-                //   ),
-                // ),
-              ],
-            ),
+            Side_bar(selected: 5),
             CustomBackGround(),
             SingleChildScrollView(
               child: Column(
@@ -104,7 +36,7 @@ class _InterfaceSettingState extends State<InterfaceSetting> {
                 children: [
                   Container(
                     margin:
-                    EdgeInsets.only(top: mq.size.height * 0.039, left: 85),
+                        EdgeInsets.only(top: mq.size.height * 0.039, left: 85),
                     width: mq.size.width * 0.4,
                     child: Column(
                       children: [

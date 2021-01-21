@@ -1,19 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:usm_mobile/Models/PostModel.dart';
+import 'package:usm_mobile/View/components/PostCard.dart';
+import 'package:usm_mobile/View/components/PostCardDivider.dart';
 
-import '../../Models/PostModel.dart';
-import 'PostCard.dart';
-import 'PostCardDivider.dart';
+class PostCardsListView extends StatelessWidget {
+  final List<Post> mainList;
+  PostCardsListView({Key key, this.mainList}) : super(key: key);
 
-class PostCardsListView extends StatefulWidget {
-  final List<Post> postsList;
-  PostCardsListView({Key key, this.postsList}) : super(key: key);
-
-  @override
-  _PostCardsListViewState createState() => _PostCardsListViewState();
-}
-
-class _PostCardsListViewState extends State<PostCardsListView> {
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -32,21 +26,18 @@ class _PostCardsListViewState extends State<PostCardsListView> {
             ],
           ),
           height: Get.height * 0.3,
-          child: ListView.separated(
-            itemCount: this.widget.postsList.length,
-            itemBuilder: (context, index) {
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: this.mainList.map((data) {
               return Row(
                 children: [
                   PostCard(
-                    post: this.widget.postsList[index],
+                    post: data,
                   ),
+                  PostCardDivider(),
                 ],
               );
-            },
-            separatorBuilder: (context, index) {
-              return PostCardDivider();
-            },
-            scrollDirection: Axis.horizontal,
+            }).toList(),
           ),
         ),
         Positioned(

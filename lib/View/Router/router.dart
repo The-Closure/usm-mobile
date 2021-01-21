@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
+import 'package:usm_mobile/View/pages/community_page.dart';
 import '../pages/Login.dart';
-import 'package:usm_app/View/pages/board_page.dart';
-import 'package:usm_app/View/pages/community_page.dart';
-import 'package:usm_app/View/pages/interface_pro.dart';
-import 'package:usm_app/View/pages/interface_setting.dart';
-import 'package:usm_app/View/pages/search_page.dart';
-import 'package:usm_app/View/pages/university_search.dart';
+import '../pages/Search_Page.dart';
+import '../pages/board_page.dart';
+import '../pages/interface_pro.dart';
+import '../pages/interface_setting.dart';
+import '../pages/university_search.dart';
 
 class Routers {
   static final route = [
