@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:usm_mobile/Models/CommentModel.dart';
-import 'package:usm_mobile/Models/PostModel.dart';
+import '../../Models/CommentModel.dart';
+import '../../Models/PostModel.dart';
 
 Widget CommentsSheet(BuildContext context, List<Comment> comments) {
   return Container(

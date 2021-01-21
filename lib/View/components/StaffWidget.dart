@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:usm_mobile/Models/profs_model.dart';
 
+import '../../Models/profs_model.dart';
 import 'CardProfsWidget.dart';
 
 class Staff extends StatelessWidget {

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../components/custom_appbar.dart';
 import '../components/side_bar.dart';
 import '../components/university.dart';
-import '../components/custom_appbar.dart';
 
 class University_Search extends StatefulWidget {
   University_Search({Key key}) : super(key: key);

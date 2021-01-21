@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
-import 'package:usm/Models/user_model.dart';
-import 'package:usm/Repositories/LocalFilesManagemenet.dart';
-import 'package:usm/Repositories/UserRepo.dart';
+import '../Models/user_model.dart';
+import '../Repositories/UserRepo.dart';
 
 class UserController extends GetxController {
   static UserController _userController;
@@ -30,11 +29,11 @@ class UserController extends GetxController {
       return false;
     else {
       {
-        LocalFileManager storage = LocalFileManager();
-        await storage.writeData(userinfo);
-        print("***************************************");
-        print(storage.readData);
-        print("***************************************");
+        // LocalFileManager storage = LocalFileManager();
+        // await storage.writeData(userinfo);
+        // print("***************************************");
+        // print(storage.readData);
+        // print("***************************************");
 
         return true;
       }

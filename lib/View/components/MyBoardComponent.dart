@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:usm/Models/BoardModel.dart';
-import 'package:usm/View/components/BoardImageWidget.dart';
-import 'package:usm/View/components/BoardTitleWidget.dart';
-import 'package:usm/View/components/DescriptionWidget.dart';
-import 'package:usm/View/components/MyDividerWidget.dart';
-import 'package:usm/View/components/ScholarShipsCardWidget.dart';
-import 'package:usm/View/components/ScholarShipsTitleWidget.dart';
-import 'package:usm/View/components/StaffWidget.dart';
+import '../../Models/BoardModel.dart';
+import 'BoardImageWidget.dart';
+import 'BoardTitleWidget.dart';
+import 'DescriptionWidget.dart';
+import 'MyDividerWidget.dart';
+import 'ScholarShipsCardWidget.dart';
+import 'ScholarShipsTitleWidget.dart';
+import 'StaffWidget.dart';
 
 class MyBoardPage extends StatelessWidget {
   BoardModel board;

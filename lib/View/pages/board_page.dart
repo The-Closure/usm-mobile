@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:usm/Models/profs_model.dart';
-import 'package:usm/Models/BoardModel.dart';
-import 'package:usm/Models/profs_model.dart';
-import 'package:usm/Models/scholarship_model.dart';
-import 'package:usm/View/components/CustomAppBar.dart';
-import 'package:usm/View/components/MyBoardComponent.dart';
-import 'package:usm/view/components/tiles.dart';
+import '../../Models/profs_model.dart';
+import '../../Models/BoardModel.dart';
+import '../../Models/profs_model.dart';
+import '../../Models/scholarship_model.dart';
+import '../components/custom_appbar.dart';
+import '../components/MyBoardComponent.dart';
+import '../components/tiles.dart';
 
 import '../components/side_bar.dart';
 

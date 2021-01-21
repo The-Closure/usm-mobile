@@ -1,8 +1,6 @@
 import 'package:get/get.dart';
-
-import 'package:get/get.dart';
-import 'package:usm/Models/BoardModel.dart';
-import 'package:usm/Repositories/BoardRepo.dart';
+import '../Models/BoardModel.dart';
+import '../Repositories/BoardRepo.dart';
 
 class BoardController extends GetxController {
   //BoardModel b = BoardModel(name: 'test');

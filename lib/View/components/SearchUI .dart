@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'SearchField.dart';
+
 import 'RadioList .dart';
 import 'ResultsList.dart';
+import 'SearchField.dart';
 
 class SearchUI extends StatelessWidget {
   @override

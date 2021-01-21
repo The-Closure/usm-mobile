@@ -1,8 +1,9 @@
 import 'dart:convert';
 
-import 'package:usm_mobile/Models/PostModel.dart';
-import 'package:usm_mobile/Repositories/Constants.dart';
 import 'package:http/http.dart' as http;
+
+import '../Models/PostModel.dart';
+import 'Constants.dart';
 
 class PostRepo {
   final post_base_url = "$base_url/posts";

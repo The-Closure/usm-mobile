@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:usm_mobile/Models/CommentModel.dart';
-import 'package:usm_mobile/Models/PostModel.dart';
-import 'package:usm_mobile/View/components/CommentsSheet.dart';
+import '../../Models/CommentModel.dart';
+import '../../Models/PostModel.dart';
+import 'CommentsSheet.dart';
 
 class PostCard extends StatelessWidget {
   final Post post;
