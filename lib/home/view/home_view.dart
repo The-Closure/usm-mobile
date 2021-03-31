@@ -10,6 +10,9 @@ class HomeView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          Image.asset(
+            "assets/images/welcome.jpg",
+          ),
           Padding(
             padding: const EdgeInsets.only(bottom: 30),
             child: Center(
