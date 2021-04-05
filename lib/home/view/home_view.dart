@@ -32,7 +32,7 @@ class HomeView extends StatelessWidget {
               onPressed: () => {},
               height: 50,
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(50)),
+                  borderRadius: BorderRadius.circular(10)),
               child: Padding(
                 padding: const EdgeInsets.all(1.6),
                 child: Text(
@@ -46,20 +46,26 @@ class HomeView extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: MaterialButton(
-              onPressed: () => {},
-              height: 50,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(50)),
-              child: Padding(
-                padding: const EdgeInsets.all(1.6),
-                child: Text(
-                  'SIGN UP',
-                  style: TextStyle(
-                      color: Colors.white, fontSize: 16, fontFamily: "Roboto"),
+            child: Hero(
+              transitionOnUserGestures: false,
+              tag: "SIGNUP",
+              child: MaterialButton(
+                onPressed: () => Navigator.of(context).pushNamed('/register'),
+                height: 50,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                child: Padding(
+                  padding: const EdgeInsets.all(1.6),
+                  child: Text(
+                    'SIGN UP',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontFamily: "Roboto"),
+                  ),
                 ),
+                color: Color.fromARGB(255, 67, 66, 93),
               ),
-              color: Color.fromARGB(255, 67, 66, 93),
             ),
           ),
         ],
