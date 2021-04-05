@@ -25,7 +25,7 @@ class _RegisterState extends State<Register> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[Image.asset('assets/images/welcome.jpg')] +
-                formList +
+                registerFormList +
                 [
                   DropdownButton<String>(
                     isExpanded: true,
@@ -45,6 +45,7 @@ class _RegisterState extends State<Register> {
                   ),
                   USMMaterialButton(
                     tag: 'SIGNUP',
+                    label: 'sign up',
                   )
                 ],
           ),

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class USMMaterialButton extends StatelessWidget {
   final String tag;
-  const USMMaterialButton({Key key, this.tag}) : super(key: key);
+  final String label;
+  const USMMaterialButton({Key key, this.tag, this.label}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +14,7 @@ class USMMaterialButton extends StatelessWidget {
         height: 50,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         child: Text(
-          'SIGN UP',
+          label,
           style: TextStyle(
               color: Colors.white, fontSize: 16, fontFamily: "Roboto"),
         ),
