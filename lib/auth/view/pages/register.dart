@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:usm_mobile/auth/bloc/auth_bloc.dart';
+import 'package:usm_mobile/auth/services/CommunityService.dart';
 import 'package:usm_mobile/auth/view/widgets/FormList.dart';
-import 'package:usm_mobile/auth/view/widgets/USMInputField.dart';
 import 'package:usm_mobile/auth/view/widgets/USMMaterialButton.dart';
 
 class Register extends StatefulWidget {
@@ -11,7 +13,14 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-  String _chosenValue = 'Google';
+  AuthBloc authBloc;
+  String _chosenValue = 'loading';
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,21 +36,78 @@ class _RegisterState extends State<Register> {
             children: <Widget>[Image.asset('assets/images/welcome.jpg')] +
                 registerFormList +
                 [
-                  DropdownButton<String>(
-                    isExpanded: true,
-                    value: _chosenValue,
-                    items: <String>['Google', 'Apple', 'Amazon', 'Tesla']
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (String value) {
-                      setState(() {
-                        _chosenValue = value;
-                      });
+                  BlocProvider(
+                    create: (context) {
+                      authBloc =
+                          AuthBloc(communityService: CommunityServiceImpl());
+                      authBloc.add(FetchCommunityEvent());
+                      print('hi');
+                      return authBloc;
                     },
+                    child: BlocBuilder<AuthBloc, AuthState>(
+                      builder: (context, state) {
+                        if (state is CommunityLoadedState) {
+                          return DropdownButton(
+                            onChanged: (value) {
+                              setState(() {
+                                _chosenValue = value;
+                              });
+                            },
+                            isExpanded: true,
+                            value: _chosenValue == 'loading'
+                                ? state.communities[0].name
+                                : _chosenValue,
+                            items: state.communities
+                                .map((e) => e.name)
+                                .toList()
+                                .map((value) {
+                              return DropdownMenuItem<String>(
+                                onTap: () => print(_chosenValue),
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                          );
+                        } else if (state is CommunityLoadingState ||
+                            state is AuthInitial) {
+                          return DropdownButton<String>(
+                            onChanged: (value) {
+                              setState(() {
+                                _chosenValue = value;
+                              });
+                            },
+                            isExpanded: true,
+                            value: _chosenValue,
+                            items: [
+                              DropdownMenuItem(
+                                  value: 'loading', child: Text('loading')),
+                              DropdownMenuItem(
+                                  value: 'google', child: Text('google')),
+                              DropdownMenuItem(
+                                  value: 'apple', child: Text('apple')),
+                            ],
+                          );
+                        } else {
+                          return DropdownButton<String>(
+                            onChanged: (value) {
+                              setState(() {
+                                _chosenValue = value;
+                              });
+                            },
+                            isExpanded: true,
+                            value: _chosenValue,
+                            items: [
+                              DropdownMenuItem(
+                                  value: 'loading', child: Text('loading')),
+                              DropdownMenuItem(
+                                  value: 'google', child: Text('google')),
+                              DropdownMenuItem(
+                                  value: 'hello', child: Text('hello')),
+                            ],
+                          );
+                        }
+                      },
+                    ),
                   ),
                   USMMaterialButton(
                     tag: 'SIGNUP',
