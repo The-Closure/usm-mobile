@@ -1,7 +1,9 @@
 part of 'auth_bloc.dart';
 
 @immutable
-abstract class AuthState {}
+abstract class AuthState {
+  List<Object> get props => [];
+}
 
 class AuthInitial extends AuthState {
   @override
@@ -14,7 +16,7 @@ class CommunityLoadingState extends AuthState {
 }
 
 class CommunityLoadedState extends AuthState {
-  List<CommunityModel> communities;
+  final List<CommunityModel> communities;
   CommunityLoadedState({this.communities});
 
   @override
@@ -22,9 +24,28 @@ class CommunityLoadedState extends AuthState {
 }
 
 class CommunityErrorState extends AuthState {
-  String message;
+  final message;
   CommunityErrorState({this.message});
 
+  @override
+  List<Object> get props => [];
+}
+
+class ProcessingRegisterState extends AuthState {
+  @override
+  List<Object> get props => [];
+}
+
+class SuccessfulRegisterState extends AuthState {
+  final RegisteredUser registeredUser;
+  SuccessfulRegisterState({this.registeredUser});
+  @override
+  List<Object> get props => [];
+}
+
+class FaildRegisterState extends AuthState {
+  final message;
+  FaildRegisterState({this.message});
   @override
   List<Object> get props => [];
 }

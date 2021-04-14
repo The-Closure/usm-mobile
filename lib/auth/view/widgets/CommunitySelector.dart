@@ -1,0 +1,103 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:usm_mobile/auth/bloc/auth_bloc.dart';
+import 'package:usm_mobile/auth/services/AuthService.dart';
+import 'package:usm_mobile/auth/services/CommunityService.dart';
+import 'package:usm_mobile/auth/view/widgets/FormList.dart';
+
+class CommunitySelector extends StatefulWidget {
+  CommunitySelector({Key key}) : super(key: key);
+
+  @override
+  _CommunitySelectorState createState() => _CommunitySelectorState();
+}
+
+class _CommunitySelectorState extends State<CommunitySelector> {
+  AuthBloc authBloc;
+
+  @override
+  Widget build(BuildContext context) {
+    return communitySelector();
+  }
+
+  BlocProvider<AuthBloc> communitySelector() {
+    return BlocProvider(
+      create: (context) {
+        authBloc = AuthBloc(communityService: CommunityServiceImpl());
+        authBloc.add(FetchCommunityEvent());
+        print('hi');
+        return authBloc;
+      },
+      child: BlocBuilder<AuthBloc, AuthState>(
+        builder: (context, state) {
+          if (state is CommunityLoadedState) {
+            return DropdownButton(
+              onChanged: (value) {
+                setState(() {
+                  RegisterFormBase.of(context).chosenValue = value;
+                });
+              },
+              isExpanded: true,
+              value: RegisterFormBase.of(context).chosenValue == 'loading'
+                  ? '-1'
+                  : RegisterFormBase.of(context).chosenValue,
+              items: [
+                    DropdownMenuItem<String>(
+                      onTap: () =>
+                          print(RegisterFormBase.of(context).chosenValue),
+                      value: (-1).toString(),
+                      child: Text(
+                        'select community',
+                        style: TextStyle(color: Colors.grey.shade300),
+                      ),
+                    )
+                  ] +
+                  state.communities
+                      .map((e) => {'name': e.name, 'id': e.id})
+                      .toList()
+                      .map((value) {
+                    return DropdownMenuItem<String>(
+                      onTap: () =>
+                          print(RegisterFormBase.of(context).chosenValue),
+                      value: value['id'].toString(),
+                      child: Text(value['name']),
+                    );
+                  }).toList(),
+            );
+          } else if (state is CommunityLoadingState || state is AuthInitial) {
+            return DropdownButton<String>(
+              onChanged: (value) {
+                setState(() {
+                  RegisterFormBase.of(context).chosenValue = value;
+                });
+              },
+              isExpanded: true,
+              value: RegisterFormBase.of(context).chosenValue,
+              items: [
+                DropdownMenuItem(value: 'loading', child: Text('loading')),
+              ],
+            );
+          } else {
+            return DropdownButton<String>(
+              onChanged: (value) {
+                setState(() {
+                  RegisterFormBase.of(context).chosenValue = value;
+                });
+              },
+              isExpanded: true,
+              value: RegisterFormBase.of(context).chosenValue,
+              items: [
+                DropdownMenuItem(
+                    value: 'loading',
+                    child: Text(
+                      'Error',
+                      style: TextStyle(color: Colors.redAccent),
+                    )),
+              ],
+            );
+          }
+        },
+      ),
+    );
+  }
+}

@@ -21,17 +21,12 @@ class _LoginState extends State<Login> {
         padding: EdgeInsets.symmetric(horizontal: 8),
         child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[Image.asset('assets/images/welcome.jpg')] +
-                loginFormList +
-                [
-                  USMMaterialButton(
-                    tag: 'LOGIN',
-                    label: 'login',
-                  )
-                ],
-          ),
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Image.asset('assets/images/welcome.jpg'),
+                LoginForm()
+              ]),
         ),
       ),
     );
