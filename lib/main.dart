@@ -5,22 +5,27 @@ import 'package:usm_mobile/community/Community.dart';
 
 import 'home/view/home_view.dart';
 
-class keys {
+class Keys {
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 }
 
 void main() {
   runApp(MaterialApp(
-    navigatorKey: keys.navigatorKey,
+    navigatorKey: Keys.navigatorKey,
     routes: {
       '/home': (_) => HomeView(),
       '/register': (_) => Register(),
       '/login': (_) => Login(),
       '/community': (_) => Community()
     },
-    home: HomeView(),
+    initialRoute: '/community',
     theme: ThemeData(
+        bottomAppBarColor: Color.fromARGB(255, 67, 66, 93),
+        iconTheme: IconThemeData(color: Colors.white),
         primaryColor: Color.fromARGB(255, 67, 66, 93),
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+            backgroundColor: Colors.white,
+            foregroundColor: Color.fromARGB(255, 67, 66, 93)),
         appBarTheme: AppBarTheme(
           centerTitle: true,
         )),

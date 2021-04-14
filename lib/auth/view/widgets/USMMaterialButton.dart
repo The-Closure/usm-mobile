@@ -7,7 +7,8 @@ import 'package:usm_mobile/auth/view/widgets/FormList.dart';
 import 'package:usm_mobile/main.dart';
 
 class USMMaterialButton extends StatelessWidget {
-  AuthBloc authBloc;
+  final AuthBloc _authBloc =
+      AuthBloc(authService: AuthServiceImpl(), navigatorKey: Keys.navigatorKey);
   final String tag;
   final String label;
   USMMaterialButton({Key key, this.tag, this.label}) : super(key: key);
@@ -17,8 +18,7 @@ class USMMaterialButton extends StatelessWidget {
     return Hero(
       tag: tag,
       child: BlocProvider(
-        create: (context) => (authBloc = AuthBloc(
-            authService: AuthServiceImpl(), navigatorKey: keys.navigatorKey)),
+        create: (context) => (_authBloc),
         child: BlocBuilder<AuthBloc, AuthState>(
           builder: (context, state) {
             if (state is ProcessingRegisterState) {
@@ -38,7 +38,7 @@ class USMMaterialButton extends StatelessWidget {
                         'chosen value : ${RegisterFormBase.of(context).chosenValue}');
                     print(
                         'email value : ${RegisterFormBase.of(context).emailController.text}');
-                    authBloc.add(
+                    _authBloc.add(
                       RegisterEvent(
                         registerFormModel: RegisterFormModel(
                             name: RegisterFormBase.of(context)
@@ -76,7 +76,7 @@ class USMMaterialButton extends StatelessWidget {
                       'chosen value : ${RegisterFormBase.of(context).chosenValue}');
                   print(
                       'email value : ${RegisterFormBase.of(context).emailController.text}');
-                  authBloc.add(
+                  _authBloc.add(
                     RegisterEvent(
                       registerFormModel: RegisterFormModel(
                           name: RegisterFormBase.of(context)

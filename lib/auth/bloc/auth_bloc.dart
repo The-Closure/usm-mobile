@@ -19,7 +19,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc({this.communityService, this.authService, this.navigatorKey})
       : super(AuthInitial());
 
-  AuthState get InitialState => AuthInitial();
+  AuthState get initialState => AuthInitial();
 
   @override
   Stream<AuthState> mapEventToState(AuthEvent event) async* {
