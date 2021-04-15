@@ -1,7 +1,9 @@
 part of 'auth_bloc.dart';
 
 @immutable
-abstract class AuthEvent {}
+abstract class AuthEvent {
+  List<Object> get props => [];
+}
 
 class FetchCommunityEvent extends AuthEvent {
   @override
@@ -9,7 +11,7 @@ class FetchCommunityEvent extends AuthEvent {
 }
 
 class RegisterEvent extends AuthEvent {
-  RegisterFormModel registerFormModel;
+  final RegisterFormModel registerFormModel;
   RegisterEvent({@required this.registerFormModel});
   @override
   List<Object> get props => [];

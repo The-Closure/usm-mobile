@@ -1,9 +1,12 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:usm_mobile/auth/models/CommunityModel.dart';
+import 'package:usm_mobile/community/models/Community.dart';
+import 'package:dio/dio.dart';
 
 abstract class CommunityService {
   Future<List<CommunityModel>> getCommunities();
+  Future<Community> getCommunity(int communityId);
 }
 
 class CommunityServiceImpl implements CommunityService {
@@ -24,6 +27,23 @@ class CommunityServiceImpl implements CommunityService {
       });
       print(list.toString());
       return list;
+    } else {
+      throw Exception();
+    }
+  }
+
+  @override
+  Future<Community> getCommunity(int communityId) async {
+    var dio = Dio();
+    Response response = await dio.get(
+        'http://192.168.1.5:8080/v2/api/community/getbyid?id=$communityId');
+    print(response.data);
+    // var response = await http.get(Uri.parse(
+    //     'http://localhost:8080/v2/api/community/getbyid?id=$communityId'));
+    print(response.toString());
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = json.decode(response.toString());
+      return Community.fromJson(data);
     } else {
       throw Exception();
     }

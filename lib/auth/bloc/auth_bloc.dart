@@ -37,8 +37,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         RegisteredUser registeredUser =
             await authService.registerUser(event.registerFormModel);
-        navigatorKey.currentState.pushNamed('/community',
-            arguments: {'userDetails': registeredUser});
+        navigatorKey.currentState.pushNamed('/community', arguments: {
+          'userDetails': registeredUser,
+          'communityId': event.registerFormModel.community
+        });
         yield SuccessfulRegisterState(registeredUser: registeredUser);
       } catch (e) {
         print('event error ${e.toString()}');
