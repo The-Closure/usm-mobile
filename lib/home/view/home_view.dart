@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class HomeView extends StatelessWidget {
   @override
@@ -60,8 +61,9 @@ class HomeView extends StatelessWidget {
                   transitionOnUserGestures: false,
                   tag: "SIGNUP",
                   child: MaterialButton(
-                    onPressed: () =>
-                        Navigator.of(context).pushNamed('/register'),
+                    onPressed: () => Get.toNamed(
+                      '/register',
+                    ),
                     height: 50,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),

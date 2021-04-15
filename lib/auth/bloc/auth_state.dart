@@ -37,8 +37,9 @@ class ProcessingRegisterState extends AuthState {
 }
 
 class SuccessfulRegisterState extends AuthState {
+  final int communityId;
   final RegisteredUser registeredUser;
-  SuccessfulRegisterState({this.registeredUser});
+  SuccessfulRegisterState({this.registeredUser, this.communityId});
   @override
   List<Object> get props => [];
 }

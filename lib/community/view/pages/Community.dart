@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:usm_mobile/auth/models/RegisterdUser.dart';
 import 'package:usm_mobile/community/services/CommunityService.dart';
 import 'package:usm_mobile/community/bloc/community_bloc.dart';
@@ -13,11 +14,12 @@ class Community extends StatelessWidget {
   Community({Key key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final Map arguments = ModalRoute.of(context).settings.arguments as Map;
-    RegisteredUser user = arguments['userDetails'] as RegisteredUser;
-    int communityId = arguments['communityId'] as int;
-    if (arguments != null) print(arguments['userDetails']);
-    user = arguments['userDetails'];
+    // final Map arguments = ModalRoute.of(context).settings.arguments as Map;
+    // int communityId = arguments['communityId'] as int;
+    // RegisteredUser user = Get.arguments['userDetails'] as RegisteredUser;
+    int communityId = Get.arguments['communityId'] as int;
+    // if (arguments != null) print(arguments['userDetails']);
+    // user = arguments['userDetails'];
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: BottomAppBar(

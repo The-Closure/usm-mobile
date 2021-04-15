@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:meta/meta.dart';
 import 'package:usm_mobile/auth/models/CommunityModel.dart';
 import 'package:usm_mobile/auth/models/RegisterFormModel.dart';
@@ -13,11 +14,9 @@ part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  GlobalKey<NavigatorState> navigatorKey;
   CommunityService communityService;
   AuthService authService;
-  AuthBloc({this.communityService, this.authService, this.navigatorKey})
-      : super(AuthInitial());
+  AuthBloc({this.communityService, this.authService}) : super(AuthInitial());
 
   AuthState get initialState => AuthInitial();
 
@@ -35,13 +34,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     } else if (event is RegisterEvent) {
       yield ProcessingRegisterState();
       try {
+        print('start registering');
         RegisteredUser registeredUser =
             await authService.registerUser(event.registerFormModel);
-        navigatorKey.currentState.pushNamed('/community', arguments: {
-          'userDetails': registeredUser,
-          'communityId': event.registerFormModel.community
-        });
-        yield SuccessfulRegisterState(registeredUser: registeredUser);
+        yield SuccessfulRegisterState(
+            registeredUser: registeredUser,
+            communityId: event.registerFormModel.community);
       } catch (e) {
         print('event error ${e.toString()}');
         yield FaildRegisterState(message: e.toString());
