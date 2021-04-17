@@ -1,48 +1,69 @@
+import 'package:usm_mobile/auth/models/RegisterdUser.dart';
 import 'package:usm_mobile/community/models/comment.dart';
 import 'package:usm_mobile/community/models/like.dart';
 
-class Posts {
-  int id;
+class PostModel {
+  int postID;
+  int userID;
+  int communityID;
+  String title;
   String value;
-  String userimg;
-  String img;
-  List<Likes> likes;
-  List<Comments> comments;
+  String attach;
+  Uentity uentity;
 
-  Posts(
-      {this.id, this.value, this.userimg, this.img, this.likes, this.comments});
+  PostModel(
+      {this.postID,
+      this.userID,
+      this.communityID,
+      this.title,
+      this.value,
+      this.attach,
+      this.uentity});
 
-  Posts.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+  PostModel.fromJson(Map<String, dynamic> json) {
+    postID = json['postID'];
+    userID = json['userID'];
+    communityID = json['communityID'];
+    title = json['title'];
     value = json['value'];
-    userimg = json['userimg'];
+    attach = json['attach'];
+    uentity =
+        json['uentity'] != null ? new Uentity.fromJson(json['uentity']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['postID'] = this.postID;
+    data['userID'] = this.userID;
+    data['communityID'] = this.communityID;
+    data['title'] = this.title;
+    data['value'] = this.value;
+    data['attach'] = this.attach;
+    if (this.uentity != null) {
+      data['uentity'] = this.uentity.toJson();
+    }
+    return data;
+  }
+}
+
+class Uentity {
+  int id;
+  String name;
+  String img;
+
+  Uentity({this.id, this.name, this.img});
+
+  Uentity.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
     img = json['img'];
-    if (json['likes'] != null) {
-      likes = [];
-      json['likes'].forEach((v) {
-        likes.add(new Likes.fromJson(v));
-      });
-    }
-    if (json['comments'] != null) {
-      comments = [];
-      json['comments'].forEach((v) {
-        comments.add(new Comments.fromJson(v));
-      });
-    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['value'] = this.value;
-    data['userimg'] = this.userimg;
+    data['name'] = this.name;
     data['img'] = this.img;
-    if (this.likes != null) {
-      data['likes'] = this.likes.map((v) => v.toJson()).toList();
-    }
-    if (this.comments != null) {
-      data['comments'] = this.comments.map((v) => v.toJson()).toList();
-    }
     return data;
   }
 }

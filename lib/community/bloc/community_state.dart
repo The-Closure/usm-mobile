@@ -30,26 +30,3 @@ class CommunityError extends CommunityState {
   @override
   List<Object> get props => [];
 }
-
-class PostsInitial extends CommunityState {
-  @override
-  List<Object> get props => [];
-}
-
-class PostsFetched extends CommunityState {
-  final Posts posts;
-  PostsFetched({this.posts});
-  @override
-  List<Object> get props => [];
-  @override
-  String get error => '';
-}
-
-class PostsError extends CommunityState {
-  final String message;
-  PostsError({this.message});
-  @override
-  String get error => message;
-  @override
-  List<Object> get props => [];
-}

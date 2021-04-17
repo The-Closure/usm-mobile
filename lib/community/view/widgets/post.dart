@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:usm_mobile/community/models/post.dart';
 import 'package:usm_mobile/community/view/widgets/user.dart';
 
 class Post extends StatelessWidget {
-  const Post({Key key}) : super(key: key);
+  final PostModel post;
+  Post({Key key, this.post}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       // padding: EdgeInsets.all(8),
-      margin: EdgeInsets.symmetric(vertical: 16),
+      margin: EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -26,13 +28,15 @@ class Post extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.all(4.0),
-                child: User(),
+                child: User(
+                  img: post.uentity.img,
+                ),
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'username',
+                    '${post.uentity.name}',
                     style: TextStyle(fontSize: 16),
                   ),
                   Text(
@@ -47,9 +51,7 @@ class Post extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: RichText(
               text: TextSpan(
-                  style: TextStyle(color: Colors.black),
-                  text:
-                      'this is the first post in this community you are welcome to visit this page in any time you want '),
+                  style: TextStyle(color: Colors.black), text: '${post.value}'),
             ),
           ),
           Divider(
@@ -70,17 +72,32 @@ class Post extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Icon(
-                  Icons.thumb_up,
-                  color: Color.fromARGB(255, 67, 66, 93),
+                IconButton(
+                  icon: Icon(
+                    Icons.thumb_up,
+                    color: Color.fromARGB(255, 67, 66, 93),
+                  ),
+                  onPressed: () {
+                    print(post.postID);
+                  },
                 ),
-                Icon(
-                  Icons.message,
-                  color: Color.fromARGB(255, 67, 66, 93),
+                IconButton(
+                  icon: Icon(
+                    Icons.message,
+                    color: Color.fromARGB(255, 67, 66, 93),
+                  ),
+                  onPressed: () {
+                    print(post.postID);
+                  },
                 ),
-                Icon(
-                  Icons.more_horiz,
-                  color: Color.fromARGB(255, 67, 66, 93),
+                IconButton(
+                  icon: Icon(
+                    Icons.more_horiz,
+                    color: Color.fromARGB(255, 67, 66, 93),
+                  ),
+                  onPressed: () {
+                    print(post.postID);
+                  },
                 ),
               ],
             ),

@@ -15,11 +15,6 @@ class LocalInit extends CommunityEvent {
   List<Object> get props => [];
 }
 
-class InitPosts extends CommunityEvent {
-  @override
-  List<Object> get props => [];
-}
-
 class AddOrRemoveLike extends CommunityEvent {
   final int postID;
   final int userID;
