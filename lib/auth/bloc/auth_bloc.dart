@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meta/meta.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:usm_mobile/auth/models/CommunityModel.dart';
 import 'package:usm_mobile/auth/models/RegisterFormModel.dart';
 import 'package:usm_mobile/auth/models/RegisterdUser.dart';
@@ -37,6 +38,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         print('start registering');
         RegisteredUser registeredUser =
             await authService.registerUser(event.registerFormModel);
+        SharedPreferences sharedPreferences =
+            await SharedPreferences.getInstance();
+        sharedPreferences.setInt(
+            "communityID", event.registerFormModel.community);
         yield SuccessfulRegisterState(
             registeredUser: registeredUser,
             communityId: event.registerFormModel.community);

@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:usm_mobile/auth/view/pages/login.dart';
 import 'package:usm_mobile/auth/view/pages/register.dart';
 import 'package:usm_mobile/community/view/pages/Community.dart';
 
 import 'home/view/home_view.dart';
 
-void main() {
-  runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  // sharedPreferences.clear();
+  runApp(MyApp(
+    home: sharedPreferences.getString("home") ?? "/home",
+  ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({
-    Key key,
-  }) : super(key: key);
+  final home;
+  const MyApp({Key key, @required this.home}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +40,7 @@ class MyApp extends StatelessWidget {
             transition: Transition.downToUp),
       ],
       debugShowCheckedModeBanner: false,
-      initialRoute: '/community',
+      initialRoute: home,
       theme: ThemeData(
           primarySwatch: createMaterialColor(Color.fromARGB(255, 67, 66, 93)),
           bottomAppBarColor: Color.fromARGB(255, 67, 66, 93),

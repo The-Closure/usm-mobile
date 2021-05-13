@@ -78,23 +78,24 @@ class _CommunitySelectorState extends State<CommunitySelector> {
               ],
             );
           } else {
-            return DropdownButton<String>(
-              onChanged: (value) {
-                setState(() {
-                  RegisterFormBase.of(context).chosenValue = value;
-                });
-              },
-              isExpanded: true,
-              value: RegisterFormBase.of(context).chosenValue,
-              items: [
-                DropdownMenuItem(
-                    value: 'loading',
-                    child: Text(
-                      'Error',
-                      style: TextStyle(color: Colors.redAccent),
-                    )),
-              ],
-            );
+            return TextButton(
+                onPressed: () => authBloc.add(FetchCommunityEvent()),
+                child: Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.refresh,
+                        color: Colors.grey,
+                      ),
+                      Text(
+                        'reload',
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                    ],
+                  ),
+                  color: Colors.transparent,
+                ));
           }
         },
       ),

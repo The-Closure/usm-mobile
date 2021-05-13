@@ -10,7 +10,7 @@ class PostServiceImpl extends Postservice {
   @override
   Future<List<PostModel>> fetchPosts(int communityId) async {
     var response = await http.get(Uri.parse(
-        "http://192.168.1.5:8080/v2/api/posts/getposts?pageNo=0&pageSize=5&sortBy=id&communityID=$communityId"));
+        "http://172.16.40.18:8080/v2/api/posts/getposts?pageNo=0&pageSize=5&sortBy=id&communityID=$communityId"));
     print(response.toString());
     if (response.statusCode == 200) {
       List data = json.decode(response.body);
