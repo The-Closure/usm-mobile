@@ -13,7 +13,9 @@ class Post extends StatelessWidget {
       margin: EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(10)),
+        borderRadius: BorderRadius.all(
+          Radius.circular(10),
+        ),
         boxShadow: <BoxShadow>[
           BoxShadow(
               blurRadius: 1,

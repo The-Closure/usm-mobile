@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:usm_mobile/auth/models/CommunityModel.dart';
 import 'package:usm_mobile/auth/models/RegisterFormModel.dart';
 import 'package:usm_mobile/auth/models/RegisterdUser.dart';
+import 'package:usm_mobile/auth/models/SignInModel.dart';
 import 'package:usm_mobile/auth/services/AuthService.dart';
 import 'package:usm_mobile/auth/services/CommunityService.dart';
 
@@ -23,6 +24,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   @override
   Stream<AuthState> mapEventToState(AuthEvent event) async* {
+    yield AuthInitial();
     if (event is FetchCommunityEvent) {
       yield CommunityLoadingState();
       try {
@@ -48,6 +50,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       } catch (e) {
         print('event error ${e.toString()}');
         yield FaildRegisterState(message: e.toString());
+      }
+    } else if (event is SignInEvent) {
+      yield SignInProcessState();
+      try {
+        RegisteredUser registeredUser =
+            await authService.signInUser(event.signInModel);
+        SharedPreferences sharedPreferences =
+            await SharedPreferences.getInstance();
+        sharedPreferences.setInt("communityID", registeredUser.communinty.id);
+        yield SuccessfulSignInState(
+            registeredUser: registeredUser,
+            communityId: registeredUser.communinty.id);
+      } catch (e) {
+        print('event error ${e.toString()}');
+        yield FaildSignInState(message: e.toString());
       }
     }
   }

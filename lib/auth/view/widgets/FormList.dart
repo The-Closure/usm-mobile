@@ -26,6 +26,25 @@ class RegisterFormBase extends InheritedWidget {
   }
 }
 
+class SignInFormBase extends InheritedWidget {
+  final AuthBloc authBloc;
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  SignInFormBase({Key key, this.child, this.authBloc})
+      : super(key: key, child: child);
+
+  final Widget child;
+
+  static SignInFormBase of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<SignInFormBase>();
+  }
+
+  @override
+  bool updateShouldNotify(SignInFormBase oldWidget) {
+    return true;
+  }
+}
+
 class RegisterForm extends StatefulWidget {
   RegisterForm({Key key}) : super(key: key);
 
@@ -89,11 +108,13 @@ class _LoginFormState extends State<LoginForm> {
       children: [
         Padding(padding: EdgeInsets.symmetric(vertical: 8)),
         USMInputField(
+          textEditingController: SignInFormBase.of(context).emailController,
           hint: 'Enter your email',
           label: 'Email : ',
         ),
         Padding(padding: EdgeInsets.symmetric(vertical: 8)),
         USMInputField(
+          textEditingController: SignInFormBase.of(context).passwordController,
           secureText: true,
           hint: 'Enter your password',
           label: 'Password : ',

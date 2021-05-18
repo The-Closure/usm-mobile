@@ -10,7 +10,7 @@ class CommunityServiceImpl implements CommunityService {
   @override
   Future<List<CommunityModel>> getCommunities() async {
     var response = await http
-        .get(Uri.parse("http://172.16.40.18:8080/v2/api/community/getall"));
+        .get(Uri.parse("http://192.168.43.187:8080/v2/api/community/getall"));
     print(response.toString());
     if (response.statusCode == 200) {
       List data = json.decode(response.body);

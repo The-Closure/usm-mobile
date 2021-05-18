@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:usm_mobile/community/bloc/post_bloc.dart';
@@ -21,6 +22,11 @@ class Community extends StatefulWidget {
 
 class _CommunityState extends State<Community> {
   final scroller = ScrollController();
+  _logout() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.clear();
+    Get.offAllNamed('/home');
+  }
 
   Future<bool> _onWillPop(BuildContext context) async {
     if (scroller.offset > 0) {
@@ -44,19 +50,39 @@ class _CommunityState extends State<Community> {
       onWillPop: () => _onWillPop(context),
       child: Scaffold(
         backgroundColor: Colors.white,
-        bottomNavigationBar: BottomAppBar(
-          shape: CircularNotchedRectangle(),
-          child: Row(
-            children: [
-              IconButton(icon: Icon(Icons.person), onPressed: () {}),
-              IconButton(icon: Icon(Icons.home), onPressed: () {}),
-              Spacer(),
-              IconButton(
-                  icon: Icon(Icons.account_balance_outlined), onPressed: () {}),
-              IconButton(icon: Icon(Icons.settings), onPressed: () {}),
-            ],
-          ),
-        ),
+        bottomNavigationBar: Builder(builder: (context) {
+          return BottomAppBar(
+            shape: CircularNotchedRectangle(),
+            child: Row(
+              children: [
+                IconButton(icon: Icon(Icons.person), onPressed: () {}),
+                IconButton(icon: Icon(Icons.home), onPressed: () {}),
+                Spacer(),
+                IconButton(
+                    icon: Icon(Icons.account_balance_outlined),
+                    onPressed: () {}),
+                IconButton(
+                    icon: Icon(Icons.settings),
+                    onPressed: () {
+                      showModalBottomSheet(
+                          context: context,
+                          builder: (ctxt) {
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: ElevatedButton(
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all(Colors.red),
+                                  ),
+                                  onPressed: _logout,
+                                  child: Text('logout')),
+                            );
+                          });
+                    }),
+              ],
+            ),
+          );
+        }),
         floatingActionButton: FloatingActionButton(
             child: Container(
               child: Icon(

@@ -50,3 +50,25 @@ class FaildRegisterState extends AuthState {
   @override
   List<Object> get props => [];
 }
+
+class SignInProcessState extends AuthState {
+  final SignInModel signInModel;
+  SignInProcessState({this.signInModel});
+  @override
+  List<Object> get props => [];
+}
+
+class FaildSignInState extends AuthState {
+  final message;
+  FaildSignInState({this.message});
+  @override
+  List<Object> get props => [];
+}
+
+class SuccessfulSignInState extends AuthState {
+  final int communityId;
+  final RegisteredUser registeredUser;
+  SuccessfulSignInState({this.registeredUser, this.communityId});
+  @override
+  List<Object> get props => [];
+}

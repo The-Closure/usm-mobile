@@ -11,8 +11,15 @@ class FetchCommunityEvent extends AuthEvent {
 }
 
 class RegisterEvent extends AuthEvent {
-  RegisterFormModel registerFormModel;
+  final RegisterFormModel registerFormModel;
   RegisterEvent({@required this.registerFormModel});
+  @override
+  List<Object> get props => [];
+}
+
+class SignInEvent extends AuthEvent {
+  final SignInModel signInModel;
+  SignInEvent({@required this.signInModel});
   @override
   List<Object> get props => [];
 }

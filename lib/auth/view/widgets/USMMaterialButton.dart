@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:usm_mobile/auth/bloc/auth_bloc.dart';
 import 'package:usm_mobile/auth/models/RegisterFormModel.dart';
+import 'package:usm_mobile/auth/models/SignInModel.dart';
 import 'package:usm_mobile/auth/services/AuthService.dart';
 import 'package:usm_mobile/auth/view/widgets/FormList.dart';
-import 'package:usm_mobile/main.dart';
 
 class USMMaterialButton extends StatelessWidget {
   AuthBloc _authBloc;
@@ -40,6 +40,13 @@ class USMMaterialButton extends StatelessWidget {
                             RegisterFormBase.of(context).chosenValue)),
                   ),
                 );
+              } else if (tag == 'LOGIN') {
+                _authBloc.add(SignInEvent(
+                    signInModel: SignInModel(
+                        email: SignInFormBase.of(context).emailController.text,
+                        password: SignInFormBase.of(context)
+                            .passwordController
+                            .text)));
               }
             },
             height: 50,
@@ -53,7 +60,8 @@ class USMMaterialButton extends StatelessWidget {
             color: Color.fromARGB(255, 67, 66, 93),
           ),
           listener: (context, state) {
-            if (state is ProcessingRegisterState) {
+            if (state is ProcessingRegisterState ||
+                state is SignInProcessState) {
               return Center(
                 child: CircularProgressIndicator(
                   strokeWidth: 3,
@@ -72,10 +80,16 @@ class USMMaterialButton extends StatelessWidget {
                 'userDetails': state.registeredUser,
                 'communityId': state.communityId
               });
-              // Get.offNamed('/community', arguments: {
-              //   'userDetails': state.registeredUser,
-              //   'communityId': state.communityId
-              // });
+            } else if (state is SuccessfulSignInState) {
+              Get.offAllNamed('/community', predicate: (route) {
+                if (Get.currentRoute == '/login')
+                  return false;
+                else
+                  return true;
+              }, arguments: {
+                'userDetails': state.registeredUser,
+                'communityId': state.communityId
+              });
             }
           },
         ),
