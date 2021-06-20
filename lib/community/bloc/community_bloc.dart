@@ -5,7 +5,7 @@ import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:usm_mobile/community/services/CommunityService.dart';
 import 'package:usm_mobile/community/models/Community.dart';
-import 'package:usm_mobile/community/models/post.dart';
+import 'package:usm_mobile/community/models/post_response.dart';
 
 part 'community_event.dart';
 part 'community_state.dart';

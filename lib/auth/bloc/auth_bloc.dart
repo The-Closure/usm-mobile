@@ -37,7 +37,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     } else if (event is RegisterEvent) {
       yield ProcessingRegisterState();
       try {
-        print('start registering');
         RegisteredUser registeredUser =
             await authService.registerUser(event.registerFormModel);
         SharedPreferences sharedPreferences =
@@ -48,7 +47,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             registeredUser: registeredUser,
             communityId: event.registerFormModel.community);
       } catch (e) {
-        print('event error ${e.toString()}');
         yield FaildRegisterState(message: e.toString());
       }
     } else if (event is SignInEvent) {
@@ -63,7 +61,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             registeredUser: registeredUser,
             communityId: registeredUser.communinty.id);
       } catch (e) {
-        print('event error ${e.toString()}');
         yield FaildSignInState(message: e.toString());
       }
     }

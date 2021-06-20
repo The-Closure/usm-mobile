@@ -25,7 +25,6 @@ class _CommunitySelectorState extends State<CommunitySelector> {
       create: (context) {
         authBloc = AuthBloc(communityService: CommunityServiceImpl());
         authBloc.add(FetchCommunityEvent());
-        print('hi');
         return authBloc;
       },
       child: BlocBuilder<AuthBloc, AuthState>(
@@ -43,8 +42,6 @@ class _CommunitySelectorState extends State<CommunitySelector> {
                   : RegisterFormBase.of(context).chosenValue,
               items: [
                     DropdownMenuItem<String>(
-                      onTap: () =>
-                          print(RegisterFormBase.of(context).chosenValue),
                       value: (-1).toString(),
                       child: Text(
                         'select community',
@@ -57,8 +54,6 @@ class _CommunitySelectorState extends State<CommunitySelector> {
                       .toList()
                       .map((value) {
                     return DropdownMenuItem<String>(
-                      onTap: () =>
-                          print(RegisterFormBase.of(context).chosenValue),
                       value: value['id'].toString(),
                       child: Text(value['name']),
                     );

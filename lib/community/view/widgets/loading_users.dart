@@ -13,8 +13,8 @@ class LoadingUsers extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: Shimmer.fromColors(
-        baseColor: Colors.white,
-        highlightColor: Theme.of(context).primaryColor,
+        highlightColor: Colors.grey,
+        baseColor: Colors.grey.shade400,
         child: CircleAvatar(
           radius: 20,
           backgroundColor: Colors.grey,

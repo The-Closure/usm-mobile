@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:usm_mobile/auth/bloc/auth_bloc.dart';
 import 'package:usm_mobile/auth/view/widgets/CommunitySelector.dart';
 import 'package:usm_mobile/auth/view/widgets/USMInputField.dart';
@@ -120,9 +121,12 @@ class _LoginFormState extends State<LoginForm> {
           label: 'Password : ',
         ),
         Padding(padding: EdgeInsets.symmetric(vertical: 8)),
-        USMMaterialButton(
-          tag: 'LOGIN',
-          label: 'login',
+        BlocProvider(
+          create: (context) => AuthBloc(),
+          child: USMMaterialButton(
+            tag: 'LOGIN',
+            label: 'login',
+          ),
         )
       ],
     );

@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart' as bloc;
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:usm_mobile/auth/view/pages/login.dart';
 import 'package:usm_mobile/auth/view/pages/register.dart';
+import 'package:usm_mobile/community/bloc/comment_bloc.dart';
+import 'package:usm_mobile/community/services/LikeService.dart';
 import 'package:usm_mobile/community/view/pages/Community.dart';
+import 'package:usm_mobile/profile/view/pages/profile.dart';
 
 import 'home/view/home_view.dart';
 
 void main() async {
+  // LikeServiceImpl likeServiceImpl = LikeServiceImpl();
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
   // sharedPreferences.clear();
@@ -22,36 +27,45 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      getPages: [
-        GetPage(
-            name: '/home',
-            page: () => HomeView(),
-            transition: Transition.rightToLeft),
-        GetPage(
-            name: '/register',
-            page: () => Register(),
-            transition: Transition.leftToRight),
-        GetPage(
-            name: '/login', page: () => Login(), transition: Transition.fade),
-        GetPage(
-            name: '/community',
-            page: () => Community(),
-            transition: Transition.downToUp),
+    return bloc.MultiBlocProvider(
+      providers: [
+        bloc.BlocProvider(create: (context) => CommentBloc()),
       ],
-      debugShowCheckedModeBanner: false,
-      initialRoute: home,
-      theme: ThemeData(
-          primarySwatch: createMaterialColor(Color.fromARGB(255, 67, 66, 93)),
-          bottomAppBarColor: Color.fromARGB(255, 67, 66, 93),
-          iconTheme: IconThemeData(color: Colors.white),
-          primaryColor: Color.fromARGB(255, 67, 66, 93),
-          floatingActionButtonTheme: FloatingActionButtonThemeData(
-              backgroundColor: Colors.white,
-              foregroundColor: Color.fromARGB(255, 67, 66, 93)),
-          appBarTheme: AppBarTheme(
-            centerTitle: true,
-          )),
+      child: GetMaterialApp(
+        getPages: [
+          GetPage(
+              name: '/home',
+              page: () => HomeView(),
+              transition: Transition.rightToLeft),
+          GetPage(
+              name: '/register',
+              page: () => Register(),
+              transition: Transition.leftToRight),
+          GetPage(
+              name: '/login', page: () => Login(), transition: Transition.fade),
+          GetPage(
+              name: '/community',
+              page: () => Community(),
+              transition: Transition.downToUp),
+          GetPage(
+              name: '/profile',
+              page: () => Profile(),
+              transition: Transition.downToUp),
+        ],
+        debugShowCheckedModeBanner: false,
+        initialRoute: home,
+        theme: ThemeData(
+            primarySwatch: createMaterialColor(Color.fromARGB(255, 67, 66, 93)),
+            bottomAppBarColor: Color.fromARGB(255, 67, 66, 93),
+            iconTheme: IconThemeData(color: Colors.white),
+            primaryColor: Color.fromARGB(255, 67, 66, 93),
+            floatingActionButtonTheme: FloatingActionButtonThemeData(
+                backgroundColor: Colors.white,
+                foregroundColor: Color.fromARGB(255, 67, 66, 93)),
+            appBarTheme: AppBarTheme(
+              centerTitle: true,
+            )),
+      ),
     );
   }
 

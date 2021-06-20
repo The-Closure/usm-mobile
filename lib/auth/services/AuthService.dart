@@ -22,17 +22,17 @@ class AuthServiceImpl implements AuthService {
         registerFormModel.toJson(),
       ),
     );
-    print(response.body.toString());
     if (response.statusCode == 201) {
       Map data = json.decode(response.body);
-      data.forEach((key, element) {
-        print('$key : $element');
-      });
+      data.forEach((key, element) {});
       RegisteredUser registeredUser = RegisteredUser.fromJson(data);
       SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
       sharedPreferences.setString("home", "/community");
       sharedPreferences.setInt("userID", registeredUser.id);
+      sharedPreferences.setString("user_name", registeredUser.name);
+      sharedPreferences.setString("user_img", registeredUser.img);
+
       return registeredUser;
     } else {
       throw Exception();
@@ -46,7 +46,6 @@ class AuthServiceImpl implements AuthService {
           "http://192.168.43.187:8080/v2/api/user/signin?email=${signInModel.email}&password=${signInModel.password}"),
       headers: {"Content-Type": "application/json"},
     );
-    print("${response.body}");
     if (response.statusCode == 200) {
       Map data = json.decode(response.body);
       RegisteredUser registeredUser = RegisteredUser.fromJson(data);
@@ -54,6 +53,8 @@ class AuthServiceImpl implements AuthService {
           await SharedPreferences.getInstance();
       sharedPreferences.setString("home", "/community");
       sharedPreferences.setInt("userID", registeredUser.id);
+      sharedPreferences.setString("user_name", registeredUser.name);
+      sharedPreferences.setString("user_img", registeredUser.img);
       return registeredUser;
     } else {
       throw Exception("${response.body}");

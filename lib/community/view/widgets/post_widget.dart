@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:usm_mobile/community/models/post.dart';
+import 'package:usm_mobile/community/models/post_response.dart';
+import 'package:usm_mobile/community/view/widgets/comment_button.dart';
+import 'package:usm_mobile/community/view/widgets/like_button.dart';
 import 'package:usm_mobile/community/view/widgets/user.dart';
 
 class Post extends StatelessWidget {
-  final PostModel post;
+  final PostResponse post;
   Post({Key key, this.post}) : super(key: key);
 
   @override
@@ -74,32 +76,14 @@ class Post extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                IconButton(
-                  icon: Icon(
-                    Icons.thumb_up,
-                    color: Color.fromARGB(255, 67, 66, 93),
-                  ),
-                  onPressed: () {
-                    print(post.postID);
-                  },
-                ),
-                IconButton(
-                  icon: Icon(
-                    Icons.message,
-                    color: Color.fromARGB(255, 67, 66, 93),
-                  ),
-                  onPressed: () {
-                    print(post.postID);
-                  },
-                ),
+                LikeButton(post: post),
+                CommentButton(post: post),
                 IconButton(
                   icon: Icon(
                     Icons.more_horiz,
                     color: Color.fromARGB(255, 67, 66, 93),
                   ),
-                  onPressed: () {
-                    print(post.postID);
-                  },
+                  onPressed: () {},
                 ),
               ],
             ),

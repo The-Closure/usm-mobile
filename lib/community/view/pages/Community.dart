@@ -1,33 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:usm_mobile/community/bloc/comment_bloc.dart';
 import 'package:usm_mobile/community/bloc/post_bloc.dart';
 import 'package:usm_mobile/community/services/CommunityService.dart';
 import 'package:usm_mobile/community/bloc/community_bloc.dart';
-import 'package:usm_mobile/community/services/PostService.dart';
+import 'package:usm_mobile/community/services/Post_service.dart';
 import 'package:usm_mobile/community/view/widgets/AddPost.dart';
+import 'package:usm_mobile/community/view/widgets/community_body.dart';
+import 'package:usm_mobile/community/view/widgets/community_footer.dart';
+import 'package:usm_mobile/community/view/widgets/community_header.dart';
 import 'package:usm_mobile/community/view/widgets/loading_posts.dart';
 import 'package:usm_mobile/community/view/widgets/loading_users.dart';
-import 'package:usm_mobile/community/view/widgets/post.dart';
+import 'package:usm_mobile/community/view/widgets/post_widget.dart';
 import 'package:usm_mobile/community/view/widgets/user.dart';
 
 //ignore: must_be_immutable
 
-class Community extends StatefulWidget {
-  @override
-  _CommunityState createState() => _CommunityState();
-}
-
-class _CommunityState extends State<Community> {
-  final scroller = ScrollController();
-  _logout() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.clear();
-    Get.offAllNamed('/home');
-  }
-
+class Community extends StatelessWidget {
+  ScrollController scroller = ScrollController(initialScrollOffset: 0);
   Future<bool> _onWillPop(BuildContext context) async {
     if (scroller.offset > 0) {
       scroller.animateTo(0,
@@ -38,178 +32,62 @@ class _CommunityState extends State<Community> {
     }
   }
 
+  PostBloc postBloc;
+  int pageNo = 0;
+
   @override
   Widget build(BuildContext context) {
     // final Map arguments = ModalRoute.of(context).settings.arguments as Map;
     // int communityId = arguments['communityId'] as int;
     // RegisteredUser user = Get.arguments['userDetails'] as RegisteredUser;
     // int communityId = Get.arguments['communityId'] ?? 12;
-    // if (arguments != null) print(arguments['userDetails']);
     // user = arguments['userDetails'];
-    return WillPopScope(
-      onWillPop: () => _onWillPop(context),
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        bottomNavigationBar: Builder(builder: (context) {
-          return BottomAppBar(
-            shape: CircularNotchedRectangle(),
-            child: Row(
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) =>
+              (postBloc = PostBloc(postServiceImpl: PostServiceImpl())
+                ..add(InitPosts(pageNo: 0))),
+        ),
+        BlocProvider(
+          create: (context) =>
+              CommunityBloc(communityServiceImpl: CommunityServiceImpl())
+                ..add(InitCommunity()),
+        ),
+      ],
+      child: WillPopScope(
+        onWillPop: () => _onWillPop(context),
+        child: Scaffold(
+          backgroundColor: Colors.white,
+          bottomNavigationBar: CommunityFooter(),
+          floatingActionButton: FloatingActionButton(
+              child: Container(
+                child: Icon(
+                  Icons.search,
+                ),
+              ),
+              onPressed: () {}),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
+          body: NestedScrollView(
+            controller: scroller,
+            // controller: scroller
+            //   ..addListener(() {
+            //     if (scroller.position.pixels ==
+            //         scroller.position.maxScrollExtent) {
+            //       // Get.snackbar('message', 'max lines');
+            //       postBloc.add(PagePosts(pageNo: pageNo += 1));
+            //     }
+            //   }),
+            headerSliverBuilder: CommunityHeader().builder(),
+            body: Column(
               children: [
-                IconButton(icon: Icon(Icons.person), onPressed: () {}),
-                IconButton(icon: Icon(Icons.home), onPressed: () {}),
-                Spacer(),
-                IconButton(
-                    icon: Icon(Icons.account_balance_outlined),
-                    onPressed: () {}),
-                IconButton(
-                    icon: Icon(Icons.settings),
-                    onPressed: () {
-                      showModalBottomSheet(
-                          context: context,
-                          builder: (ctxt) {
-                            return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: ElevatedButton(
-                                  style: ButtonStyle(
-                                    backgroundColor:
-                                        MaterialStateProperty.all(Colors.red),
-                                  ),
-                                  onPressed: _logout,
-                                  child: Text('logout')),
-                            );
-                          });
-                    }),
+                AddPost(),
+                CommunityBody(
+                  scrollController: scroller,
+                )
               ],
             ),
-          );
-        }),
-        floatingActionButton: FloatingActionButton(
-            child: Container(
-              child: Icon(
-                Icons.search,
-              ),
-            ),
-            onPressed: () {}),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        body: NestedScrollView(
-          controller: scroller,
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return <Widget>[
-              BlocProvider(
-                create: (context) {
-                  CommunityBloc communityBloc = CommunityBloc(
-                    communityServiceImpl: CommunityServiceImpl(),
-                  );
-
-                  communityBloc.add(InitCommunity());
-                  return communityBloc;
-                },
-                child: SliverAppBar(
-                  expandedHeight: 125.0,
-                  floating: false,
-                  pinned: true,
-                  snap: false,
-                  flexibleSpace: BlocBuilder<CommunityBloc, CommunityState>(
-                    builder: (context, state) {
-                      if (state is CommunityInitial) {
-                        return FlexibleSpaceBar(
-                          titlePadding: EdgeInsets.all(16),
-                          title: Shimmer(
-                            child: Text('loading'),
-                            gradient: LinearGradient(colors: [
-                              Colors.white,
-                              Color.fromARGB(255, 67, 66, 93)
-                            ]),
-                          ),
-                          background: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              LoadingUsers(),
-                              LoadingUsers(),
-                              LoadingUsers(),
-                              LoadingUsers(),
-                            ],
-                          ),
-                          centerTitle: true,
-                        );
-                      } else if (state is CommunityFetched) {
-                        return FlexibleSpaceBar(
-                          collapseMode: CollapseMode.parallax,
-                          titlePadding: EdgeInsets.all(16),
-                          title: Text(
-                            '${state.community.name}',
-                            style: TextStyle(fontSize: 12),
-                          ),
-                          background: ListView.builder(
-                            // controller: scroller,
-                            itemCount: state.community.users.length,
-                            itemBuilder: (_, index) {
-                              return GestureDetector(
-                                onTap: () => print(state.community.users[index]
-                                    .toJson()
-                                    .toString()),
-                                child: User(
-                                  img: state.community.users[index].img,
-                                ),
-                              );
-                            },
-                            scrollDirection: Axis.horizontal,
-                          ),
-                          centerTitle: true,
-                        );
-                      } else {
-                        return FlexibleSpaceBar(
-                          titlePadding: EdgeInsets.all(16),
-                          title: Text('${state.error}'),
-                          background: ListView(
-                            scrollDirection: Axis.horizontal,
-                            children: [
-                              User(),
-                              User(),
-                            ],
-                          ),
-                          centerTitle: true,
-                        );
-                      }
-                    },
-                  ),
-                ),
-              ),
-            ];
-          },
-          body: Column(
-            children: [
-              AddPost(),
-              BlocProvider(
-                create: (context) {
-                  PostBloc postBloc =
-                      PostBloc(postServiceImpl: PostServiceImpl());
-                  postBloc.add(InitPosts());
-                  return postBloc;
-                },
-                child: BlocBuilder<PostBloc, PostState>(
-                  builder: (context, state) {
-                    if (state is InitPosts) {
-                      return LoadingPosts();
-                    } else if (state is PostsFetched) {
-                      return Expanded(
-                        child: ListView.builder(
-                          padding: EdgeInsets.all(0),
-                          itemCount: state.posts.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Post(post: state.posts[index]);
-                          },
-                        ),
-                      );
-                    } else if (state is PostsError) {
-                      return Text('error occuried ');
-                    } else {
-                      return LoadingPosts();
-                    }
-                  },
-                ),
-              ),
-            ],
           ),
         ),
       ),

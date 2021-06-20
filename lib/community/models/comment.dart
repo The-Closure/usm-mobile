@@ -1,27 +1,29 @@
+import 'package:usm_mobile/community/models/post_response.dart';
+
 class Comments {
-  String name;
-  String userID;
-  String img;
   int id;
   String value;
+  Uentity uentity;
+  int postID;
 
-  Comments({this.name, this.userID, this.img, this.id, this.value});
+  Comments({this.id, this.value, this.uentity, this.postID});
 
   Comments.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    userID = json['userID'];
-    img = json['img'];
     id = json['id'];
     value = json['value'];
+    uentity =
+        json['uentity'] != null ? new Uentity.fromJson(json['uentity']) : null;
+    postID = json['postID'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['userID'] = this.userID;
-    data['img'] = this.img;
     data['id'] = this.id;
     data['value'] = this.value;
+    if (this.uentity != null) {
+      data['uentity'] = this.uentity.toJson();
+    }
+    data['postID'] = this.postID;
     return data;
   }
 }

@@ -14,18 +14,12 @@ class CommunityServiceImpl implements CommunityService {
   Future<List<CommunityModel>> getCommunities() async {
     var response = await http
         .get(Uri.parse("http://192.168.43.187:8080/v2/api/community/getall"));
-    print(response.toString());
     if (response.statusCode == 200) {
       List data = json.decode(response.body);
-      data.forEach((element) {
-        print(element.toString());
-      });
+      data.forEach((element) {});
       List<CommunityModel> list =
           data.map((e) => CommunityModel.fromJson(e)).toList(growable: true);
-      list.forEach((element) {
-        print(element.name);
-      });
-      print(list.toString());
+      list.forEach((element) {});
       return list;
     } else {
       throw Exception();
@@ -37,10 +31,8 @@ class CommunityServiceImpl implements CommunityService {
     var dio = Dio();
     Response response = await dio.get(
         'http://192.168.43.187:8080/v2/api/community/getbyid?id=$communityId');
-    print(response.data);
     // var response = await http.get(Uri.parse(
     //     'http://localhost:8080/v2/api/community/getbyid?id=$communityId'));
-    print(response.toString());
     if (response.statusCode == 200) {
       Map<String, dynamic> data = json.decode(response.toString());
       return Community.fromJson(data);

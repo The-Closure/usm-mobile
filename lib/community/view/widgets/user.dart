@@ -1,4 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:octo_image/octo_image.dart';
+import 'package:usm_mobile/community/view/widgets/loading_users.dart';
 
 class User extends StatelessWidget {
   final String img;
@@ -17,8 +20,10 @@ class User extends StatelessWidget {
               ? Image.asset(
                   'assets/images/user.jpg',
                 )
-              : Image.network(
-                  img,
+              : CachedNetworkImage(
+                  imageUrl: "$img",
+                  placeholder: (context, url) => LoadingUsers(),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
                 ),
         ),
       ),
