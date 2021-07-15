@@ -30,7 +30,10 @@ class _CommunitySelectorState extends State<CommunitySelector> {
       child: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {
           if (state is CommunityLoadedState) {
-            return DropdownButton(
+            return DropdownButtonFormField(
+              validator: (value) => RegisterFormBase.of(context)
+                  .registerValidation
+                  .validateCommunity(value),
               onChanged: (value) {
                 setState(() {
                   RegisterFormBase.of(context).chosenValue = value;

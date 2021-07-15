@@ -25,21 +25,29 @@ class USMMaterialButton extends StatelessWidget {
             minWidth: MediaQuery.of(context).size.width,
             onPressed: () {
               if (tag == 'SIGNUP') {
-                _authBloc.add(
-                  RegisterEvent(
-                    registerFormModel: RegisterFormModel(
-                        name: RegisterFormBase.of(context)
-                            .usernameController
-                            .text,
-                        email:
-                            RegisterFormBase.of(context).emailController.text,
-                        password: RegisterFormBase.of(context)
-                            .passwordController
-                            .text,
-                        community: int.parse(
-                            RegisterFormBase.of(context).chosenValue)),
-                  ),
-                );
+                if (RegisterFormBase.of(context)
+                    .formKey
+                    .currentState
+                    .validate()) {
+                  _authBloc.add(
+                    RegisterEvent(
+                      registerFormModel: RegisterFormModel(
+                          name: RegisterFormBase.of(context)
+                              .usernameController
+                              .text,
+                          email:
+                              RegisterFormBase.of(context).emailController.text,
+                          password: RegisterFormBase.of(context)
+                              .passwordController
+                              .text,
+                          community: int.parse(
+                              RegisterFormBase.of(context).chosenValue)),
+                    ),
+                  );
+                } else {
+                  Get.snackbar('message',
+                      'check your register form or select community ');
+                }
               } else if (tag == 'LOGIN') {
                 _authBloc.add(SignInEvent(
                     signInModel: SignInModel(
@@ -62,14 +70,16 @@ class USMMaterialButton extends StatelessWidget {
           listener: (context, state) {
             if (state is ProcessingRegisterState ||
                 state is SignInProcessState) {
-              return Center(
-                child: CircularProgressIndicator(
-                  strokeWidth: 3,
-                  backgroundColor: Color.fromARGB(255, 67, 66, 93),
-                ),
-              );
-            } else if (state is FaildRegisterState) {
-              Get.snackbar('faild to register', '${state.message}');
+              showDialog(
+                  context: context,
+                  builder: (ctxt) => Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                  barrierDismissible: false);
+            } else if (state is FaildRegisterState ||
+                state is FaildSignInState) {
+              Navigator.pop(context);
+              Get.snackbar('faild to register', '');
             } else if (state is SuccessfulRegisterState) {
               Get.offAllNamed('/community', predicate: (route) {
                 if (Get.currentRoute == '/register')
@@ -90,6 +100,8 @@ class USMMaterialButton extends StatelessWidget {
                 'userDetails': state.registeredUser,
                 'communityId': state.communityId
               });
+            } else if (state is SignInNoCommunityState) {
+              Get.offAllNamed('/noCommunity');
             }
           },
         ),

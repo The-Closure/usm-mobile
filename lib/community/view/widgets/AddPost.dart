@@ -6,9 +6,8 @@ import 'package:usm_mobile/community/bloc/post_bloc.dart';
 import 'package:usm_mobile/community/models/post_response.dart';
 
 class AddPost extends StatefulWidget {
-  AddPost({Key key, this.posts}) : super(key: key);
+  AddPost({Key key}) : super(key: key);
 
-  List<PostResponse> posts;
   @override
   _AddPostState createState() => _AddPostState();
 }

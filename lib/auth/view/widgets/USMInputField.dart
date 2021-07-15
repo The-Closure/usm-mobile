@@ -5,18 +5,21 @@ class USMInputField extends StatelessWidget {
   final bool secureText;
   final String label;
   final String hint;
+  String Function(String) validator;
   TextEditingController textEditingController;
   USMInputField(
       {Key key,
       this.secureText = false,
       this.hint,
       this.label,
-      this.textEditingController})
+      this.textEditingController,
+      this.validator})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      validator: validator,
       controller: textEditingController,
       obscureText: secureText,
       decoration: InputDecoration(

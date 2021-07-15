@@ -58,16 +58,18 @@ class Post extends StatelessWidget {
                   style: TextStyle(color: Colors.black), text: '${post.value}'),
             ),
           ),
-          Divider(
-            color: Colors.black,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Image.asset(
-              'assets/images/welcome.jpg',
-              fit: BoxFit.cover,
-            ),
-          ),
+          // Divider(
+          //   color: Colors.black,
+          // ),
+          if (post.attach != null)
+            if (!post.attach.startsWith('path'))
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Image.network(
+                  '${post.attach}',
+                  fit: BoxFit.cover,
+                ),
+              ),
           Divider(
             color: Colors.black,
           ),

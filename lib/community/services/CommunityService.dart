@@ -13,7 +13,7 @@ class CommunityServiceImpl implements CommunityService {
   @override
   Future<List<CommunityModel>> getCommunities() async {
     var response = await http
-        .get(Uri.parse("http://192.168.43.187:8080/v2/api/community/getall"));
+        .get(Uri.parse("http://164.68.96.30:7070/v2/api/community/getall"));
     if (response.statusCode == 200) {
       List data = json.decode(response.body);
       data.forEach((element) {});
@@ -28,9 +28,15 @@ class CommunityServiceImpl implements CommunityService {
 
   @override
   Future<Community> getCommunity(int communityId) async {
-    var dio = Dio();
+    BaseOptions options = new BaseOptions(
+        receiveDataWhenStatusError: true,
+        connectTimeout: 5000,
+        receiveTimeout: 5000);
+
+    var dio = new Dio(options);
     Response response = await dio.get(
-        'http://192.168.43.187:8080/v2/api/community/getbyid?id=$communityId');
+      'http://164.68.96.30:7070/v2/api/community/getbyid?id=$communityId',
+    );
     // var response = await http.get(Uri.parse(
     //     'http://localhost:8080/v2/api/community/getbyid?id=$communityId'));
     if (response.statusCode == 200) {

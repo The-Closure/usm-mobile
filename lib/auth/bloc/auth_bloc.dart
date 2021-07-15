@@ -11,6 +11,7 @@ import 'package:usm_mobile/auth/models/RegisterdUser.dart';
 import 'package:usm_mobile/auth/models/SignInModel.dart';
 import 'package:usm_mobile/auth/services/AuthService.dart';
 import 'package:usm_mobile/auth/services/CommunityService.dart';
+import 'package:usm_mobile/firebase/cloud_messaging/messaging_service.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -46,6 +47,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         yield SuccessfulRegisterState(
             registeredUser: registeredUser,
             communityId: event.registerFormModel.community);
+        MessagingService()
+            .addTokenToApi(sharedPreferences.getString('FCMTOKEN'));
       } catch (e) {
         yield FaildRegisterState(message: e.toString());
       }
@@ -54,13 +57,25 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         RegisteredUser registeredUser =
             await authService.signInUser(event.signInModel);
-        SharedPreferences sharedPreferences =
-            await SharedPreferences.getInstance();
-        sharedPreferences.setInt("communityID", registeredUser.communinty.id);
-        yield SuccessfulSignInState(
-            registeredUser: registeredUser,
-            communityId: registeredUser.communinty.id);
+        if (registeredUser.communinty != null) {
+          SharedPreferences sharedPreferences =
+              await SharedPreferences.getInstance();
+          sharedPreferences.setInt("communityID", registeredUser.communinty.id);
+          yield SuccessfulSignInState(
+              registeredUser: registeredUser,
+              communityId: registeredUser.communinty.id);
+          MessagingService()
+              .addTokenToApi(sharedPreferences.getString('FCMTOKEN'));
+        } else {
+          SharedPreferences sharedPreferences =
+              await SharedPreferences.getInstance();
+          sharedPreferences.setString("home", "/NoCommunity");
+          MessagingService()
+              .addTokenToApi(sharedPreferences.getString('FCMTOKEN'));
+          yield SignInNoCommunityState(registeredUser: registeredUser);
+        }
       } catch (e) {
+        print('${e.toString()}');
         yield FaildSignInState(message: e.toString());
       }
     }

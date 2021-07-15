@@ -16,7 +16,7 @@ class AuthServiceImpl implements AuthService {
   Future<RegisteredUser> registerUser(
       RegisterFormModel registerFormModel) async {
     var response = await http.post(
-      Uri.parse("http://192.168.43.187:8080/v2/api/user/add"),
+      Uri.parse("http://164.68.96.30:7070/v2/api/user/add"),
       headers: {"Content-Type": "application/json"},
       body: json.encode(
         registerFormModel.toJson(),
@@ -43,12 +43,14 @@ class AuthServiceImpl implements AuthService {
   Future<RegisteredUser> signInUser(SignInModel signInModel) async {
     var response = await http.put(
       Uri.parse(
-          "http://192.168.43.187:8080/v2/api/user/signin?email=${signInModel.email}&password=${signInModel.password}"),
+          "http://164.68.96.30:7070/v2/api/user/signin?email=${signInModel.email}&password=${signInModel.password}"),
       headers: {"Content-Type": "application/json"},
     );
     if (response.statusCode == 200) {
       Map data = json.decode(response.body);
+      print('${response.body}');
       RegisteredUser registeredUser = RegisteredUser.fromJson(data);
+      print('${registeredUser.communinty}');
       SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
       sharedPreferences.setString("home", "/community");

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:usm_mobile/auth/bloc/auth_bloc.dart';
+import 'package:usm_mobile/auth/validations/register_validation.dart';
 import 'package:usm_mobile/auth/view/widgets/CommunitySelector.dart';
 import 'package:usm_mobile/auth/view/widgets/USMInputField.dart';
 import 'package:usm_mobile/auth/view/widgets/USMMaterialButton.dart';
@@ -12,6 +13,8 @@ class RegisterFormBase extends InheritedWidget {
   TextEditingController passwordController = TextEditingController();
   TextEditingController ageController = TextEditingController();
   TextEditingController communityController = TextEditingController();
+  RegisterValidation registerValidation = RegisterValidation();
+  final formKey = GlobalKey<FormState>();
   dynamic chosenValue = 'loading';
   RegisterFormBase({Key key, this.child}) : super(key: key, child: child);
 
@@ -56,41 +59,56 @@ class RegisterForm extends StatefulWidget {
 class _RegisterFormState extends State<RegisterForm> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        USMInputField(
-          textEditingController:
-              RegisterFormBase.of(context).usernameController,
-          hint: 'Enter your full name',
-          label: 'Name : ',
-        ),
-        Padding(padding: EdgeInsets.symmetric(vertical: 8)),
-        USMInputField(
-          textEditingController: RegisterFormBase.of(context).emailController,
-          hint: 'Enter your email',
-          label: 'Email : ',
-        ),
-        Padding(padding: EdgeInsets.symmetric(vertical: 8)),
-        USMInputField(
-          textEditingController:
-              RegisterFormBase.of(context).passwordController,
-          secureText: true,
-          hint: 'Enter your password',
-          label: 'Password : ',
-        ),
-        Padding(padding: EdgeInsets.symmetric(vertical: 8)),
-        USMInputField(
-          textEditingController: RegisterFormBase.of(context).ageController,
-          hint: 'Enter your age',
-          label: 'Age : ',
-        ),
-        Padding(padding: EdgeInsets.symmetric(vertical: 8)),
-        CommunitySelector(),
-        USMMaterialButton(
-          tag: 'SIGNUP',
-          label: 'sign up',
-        )
-      ],
+    return Form(
+      key: RegisterFormBase.of(context).formKey,
+      autovalidateMode: AutovalidateMode.disabled,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          USMInputField(
+            textEditingController:
+                RegisterFormBase.of(context).usernameController,
+            validator: (value) => RegisterFormBase.of(context)
+                .registerValidation
+                .validateName(value),
+            hint: 'Enter your full name',
+            label: 'Name : ',
+          ),
+          Padding(padding: EdgeInsets.symmetric(vertical: 8)),
+          USMInputField(
+            textEditingController: RegisterFormBase.of(context).emailController,
+            validator: (value) => RegisterFormBase.of(context)
+                .registerValidation
+                .validateEmail(value),
+            hint: 'Enter your email',
+            label: 'Email : ',
+          ),
+          Padding(padding: EdgeInsets.symmetric(vertical: 8)),
+          USMInputField(
+            textEditingController:
+                RegisterFormBase.of(context).passwordController,
+            validator: (value) => RegisterFormBase.of(context)
+                .registerValidation
+                .validatePassword(value),
+            secureText: true,
+            hint: 'Enter your password',
+            label: 'Password : ',
+          ),
+          // Padding(padding: EdgeInsets.symmetric(vertical: 8)),
+          // USMInputField(
+          //   textEditingController: RegisterFormBase.of(context).ageController,
+          //   hint: 'Enter your age',
+          //   label: 'Age : ',
+          // ),
+          Padding(padding: EdgeInsets.symmetric(vertical: 8)),
+          CommunitySelector(),
+          Padding(padding: EdgeInsets.symmetric(vertical: 8)),
+          USMMaterialButton(
+            tag: 'SIGNUP',
+            label: 'sign up',
+          )
+        ],
+      ),
     );
   }
 }

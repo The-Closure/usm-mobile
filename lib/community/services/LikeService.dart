@@ -11,7 +11,7 @@ class LikeServiceImpl extends LikeService {
   @override
   Future<bool> addLike({int postID, int userID}) async {
     final response = await http.post(
-        Uri.parse('http://192.168.43.187:8080/v2/api/likes/addlike'),
+        Uri.parse('http://164.68.96.30:7070/v2/api/likes/addlike'),
         headers: {'content-type': 'application/json;charset=utf-8'},
         body: jsonEncode({'postID': postID, 'userID': userID}));
 
@@ -22,7 +22,7 @@ class LikeServiceImpl extends LikeService {
   Future<bool> deleteLike({int postID, int userID}) async {
     final response = await http.delete(
       Uri.parse(
-          'http://192.168.43.187:8080/v2/api/likes/deletelike?userID=$userID&postID=$postID'),
+          'http://164.68.96.30:7070/v2/api/likes/deletelike?userID=$userID&postID=$postID'),
       headers: {'content-type': 'application/json;charset=utf-8'},
     );
     return response.body.contains('true');

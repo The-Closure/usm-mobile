@@ -72,3 +72,8 @@ class SuccessfulSignInState extends AuthState {
   @override
   List<Object> get props => [];
 }
+
+class SignInNoCommunityState extends AuthState {
+  final RegisteredUser registeredUser;
+  SignInNoCommunityState({this.registeredUser});
+}

@@ -1,27 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shimmer/shimmer.dart';
-import 'package:usm_mobile/community/bloc/comment_bloc.dart';
 import 'package:usm_mobile/community/bloc/post_bloc.dart';
 import 'package:usm_mobile/community/services/CommunityService.dart';
 import 'package:usm_mobile/community/bloc/community_bloc.dart';
 import 'package:usm_mobile/community/services/Post_service.dart';
-import 'package:usm_mobile/community/view/widgets/AddPost.dart';
 import 'package:usm_mobile/community/view/widgets/community_body.dart';
 import 'package:usm_mobile/community/view/widgets/community_footer.dart';
 import 'package:usm_mobile/community/view/widgets/community_header.dart';
-import 'package:usm_mobile/community/view/widgets/loading_posts.dart';
-import 'package:usm_mobile/community/view/widgets/loading_users.dart';
-import 'package:usm_mobile/community/view/widgets/post_widget.dart';
-import 'package:usm_mobile/community/view/widgets/user.dart';
-
 //ignore: must_be_immutable
 
+// ignore: must_be_immutable
 class Community extends StatelessWidget {
   ScrollController scroller = ScrollController(initialScrollOffset: 0);
+  bool scrollUp = false;
   Future<bool> _onWillPop(BuildContext context) async {
     if (scroller.offset > 0) {
       scroller.animateTo(0,
@@ -81,12 +72,7 @@ class Community extends StatelessWidget {
             //   }),
             headerSliverBuilder: CommunityHeader().builder(),
             body: Column(
-              children: [
-                AddPost(),
-                CommunityBody(
-                  scrollController: scroller,
-                )
-              ],
+              children: [CommunityBody()],
             ),
           ),
         ),
