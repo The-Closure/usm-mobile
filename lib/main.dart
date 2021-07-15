@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart' as bloc;
 import 'package:get/get.dart';
@@ -5,15 +6,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:usm_mobile/auth/view/pages/login.dart';
 import 'package:usm_mobile/auth/view/pages/register.dart';
 import 'package:usm_mobile/community/bloc/comment_bloc.dart';
-import 'package:usm_mobile/community/services/LikeService.dart';
-import 'package:usm_mobile/community/view/pages/Community.dart';
+import 'package:usm_mobile/community/view/pages/community_info.dart';
+import 'package:usm_mobile/community/view/pages/dep_community.dart';
+import 'package:usm_mobile/community/view/pages/no_community.dart';
+import 'package:usm_mobile/firebase/cloud_messaging/messaging_service.dart';
 import 'package:usm_mobile/profile/view/pages/profile.dart';
-
 import 'home/view/home_view.dart';
 
 void main() async {
-  // LikeServiceImpl likeServiceImpl = LikeServiceImpl();
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp();
+  await MessagingService().initMessaging();
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
   // sharedPreferences.clear();
   runApp(MyApp(
@@ -23,8 +27,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   final home;
-  const MyApp({Key key, @required this.home}) : super(key: key);
-
+  MyApp({Key key, @required this.home}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return bloc.MultiBlocProvider(
@@ -45,11 +48,19 @@ class MyApp extends StatelessWidget {
               name: '/login', page: () => Login(), transition: Transition.fade),
           GetPage(
               name: '/community',
-              page: () => Community(),
+              page: () => DepCommunity(),
               transition: Transition.downToUp),
           GetPage(
               name: '/profile',
               page: () => Profile(),
+              transition: Transition.downToUp),
+          GetPage(
+              name: '/noCommunity',
+              page: () => NoCommunity(),
+              transition: Transition.downToUp),
+          GetPage(
+              name: '/communityInfo',
+              page: () => CommunityInfo(),
               transition: Transition.downToUp),
         ],
         debugShowCheckedModeBanner: false,
