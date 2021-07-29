@@ -19,7 +19,6 @@ void main() async {
   await Firebase.initializeApp();
   await MessagingService().initMessaging();
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  // sharedPreferences.clear();
   runApp(MyApp(
     home: sharedPreferences.getString("home") ?? "/home",
   ));

@@ -72,7 +72,11 @@ class Community extends StatelessWidget {
             //   }),
             headerSliverBuilder: CommunityHeader().builder(),
             body: Column(
-              children: [CommunityBody()],
+              children: [
+                CommunityBody(
+                  scrollController: ScrollController(),
+                )
+              ],
             ),
           ),
         ),
