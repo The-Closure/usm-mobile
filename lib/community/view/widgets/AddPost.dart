@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:usm_mobile/community/bloc/post_bloc.dart';
-import 'package:usm_mobile/community/models/post_response.dart';
 
 class AddPost extends StatefulWidget {
   AddPost({Key key}) : super(key: key);

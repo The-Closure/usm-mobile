@@ -1,17 +1,18 @@
 import 'dart:convert';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:usm_mobile/community/services/Post_service.dart';
 
 class MessagingService {
   Future<void> initMessaging() async {
     // FirebaseApp firebaseInit = await Firebase.initializeApp();
     FirebaseMessaging messaging = FirebaseMessaging.instance;
     String token = await messaging.getToken();
-    print('!!! ... $token');
     const AndroidNotificationChannel channel = AndroidNotificationChannel(
       'high_importance_channel', // id
       'High Importance Notifications', // title
@@ -31,7 +32,16 @@ class MessagingService {
     await flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
       onSelectNotification: (selectNotification) async {
-        print('$selectNotification');
+        WidgetsFlutterBinding.ensureInitialized();
+
+        selectNotification = selectNotification.replaceAll('{', '');
+        selectNotification = selectNotification.replaceAll('}', '');
+        selectNotification = selectNotification.replaceAll('postID', '');
+        selectNotification = selectNotification.replaceAll(':', '');
+        selectNotification = selectNotification.trim();
+        Get.toNamed('/PostDetails',
+            arguments: await PostServiceImpl()
+                .fetchPost(int.parse(selectNotification)));
       },
     );
 
@@ -40,12 +50,6 @@ class MessagingService {
             AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print('Got a message whilst in the foreground!');
-      print('Message data: ${message.data}');
-      if (message.notification != null) {
-        print('Message also contained a notification: ${message.notification}');
-      }
-
       RemoteNotification notification = message.notification;
       AndroidNotification android = message.notification.android;
 
@@ -65,11 +69,14 @@ class MessagingService {
               icon: android?.smallIcon,
               // other properties...
             )),
-            payload: 'test 111');
+            payload: message.data.toString());
       }
     });
-    FirebaseMessaging.onMessageOpenedApp.listen((event) {
-      Get.toNamed('/profile');
+    FirebaseMessaging.onMessageOpenedApp.listen((event) async {
+      Map postID = event.data;
+      Get.toNamed('/PostDetails',
+          arguments:
+              await PostServiceImpl().fetchPost(int.parse(postID['postID'])));
     });
 
     await SharedPreferences.getInstance()
@@ -79,7 +86,8 @@ class MessagingService {
   }
 
   Future<void> addTokenToApi(String token) async {
-    http.Response response = await http.post(
+    // http.Response response =
+    await http.post(
       Uri.parse('http://164.68.96.30:7070/api/v2/firebase/addToken'),
       headers: {'content-type': 'application/json;encode=utf-8'},
       body: jsonEncode(
@@ -92,6 +100,5 @@ class MessagingService {
         },
       ),
     );
-    print('${response.body}');
   }
 }

@@ -75,7 +75,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           yield SignInNoCommunityState(registeredUser: registeredUser);
         }
       } catch (e) {
-        print('${e.toString()}');
         yield FaildSignInState(message: e.toString());
       }
     }

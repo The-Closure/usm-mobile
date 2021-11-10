@@ -48,9 +48,7 @@ class AuthServiceImpl implements AuthService {
     );
     if (response.statusCode == 200) {
       Map data = json.decode(response.body);
-      print('${response.body}');
       RegisteredUser registeredUser = RegisteredUser.fromJson(data);
-      print('${registeredUser.communinty}');
       SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
       sharedPreferences.setString("home", "/community");

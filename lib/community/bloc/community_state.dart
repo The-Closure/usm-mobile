@@ -13,7 +13,7 @@ class CommunityInitial extends CommunityState {
 }
 
 class CommunityFetched extends CommunityState {
-  final Community community;
+  final CommunityRespnse community;
   CommunityFetched({this.community});
   @override
   List<Object> get props => [];

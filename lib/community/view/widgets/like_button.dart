@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:usm_mobile/auth/models/RegisterdUser.dart';
 import 'package:usm_mobile/community/bloc/like_bloc.dart';
 import 'package:usm_mobile/community/models/like.dart';
 import 'package:usm_mobile/community/models/like_request.dart';
@@ -15,7 +14,7 @@ class LikeButton extends StatelessWidget {
     @required this.post,
   }) : super(key: key);
 
-  PostResponse post;
+  final PostResponse post;
 
   @override
   Widget build(BuildContext context) {

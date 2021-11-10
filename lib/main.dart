@@ -6,9 +6,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:usm_mobile/auth/view/pages/login.dart';
 import 'package:usm_mobile/auth/view/pages/register.dart';
 import 'package:usm_mobile/community/bloc/comment_bloc.dart';
+import 'package:usm_mobile/community/bloc/community_bloc.dart';
+import 'package:usm_mobile/community/bloc/post_bloc.dart';
 import 'package:usm_mobile/community/view/pages/community_info.dart';
 import 'package:usm_mobile/community/view/pages/dep_community.dart';
 import 'package:usm_mobile/community/view/pages/no_community.dart';
+import 'package:usm_mobile/community/view/pages/post_details.dart';
+import 'package:usm_mobile/consts.dart';
 import 'package:usm_mobile/firebase/cloud_messaging/messaging_service.dart';
 import 'package:usm_mobile/profile/view/pages/profile.dart';
 import 'home/view/home_view.dart';
@@ -32,50 +36,61 @@ class MyApp extends StatelessWidget {
     return bloc.MultiBlocProvider(
       providers: [
         bloc.BlocProvider(create: (context) => CommentBloc()),
+        bloc.BlocProvider(create: (context) => CommunityBloc()),
+        bloc.BlocProvider(create: (context) => PostBloc()),
       ],
-      child: GetMaterialApp(
-        getPages: [
-          GetPage(
-              name: '/home',
-              page: () => HomeView(),
-              transition: Transition.rightToLeft),
-          GetPage(
-              name: '/register',
-              page: () => Register(),
-              transition: Transition.leftToRight),
-          GetPage(
-              name: '/login', page: () => Login(), transition: Transition.fade),
-          GetPage(
-              name: '/community',
-              page: () => DepCommunity(),
-              transition: Transition.downToUp),
-          GetPage(
-              name: '/profile',
-              page: () => Profile(),
-              transition: Transition.downToUp),
-          GetPage(
-              name: '/noCommunity',
-              page: () => NoCommunity(),
-              transition: Transition.downToUp),
-          GetPage(
-              name: '/communityInfo',
-              page: () => CommunityInfo(),
-              transition: Transition.downToUp),
-        ],
-        debugShowCheckedModeBanner: false,
-        initialRoute: home,
-        theme: ThemeData(
-            primarySwatch: createMaterialColor(Color.fromARGB(255, 67, 66, 93)),
-            bottomAppBarColor: Color.fromARGB(255, 67, 66, 93),
-            iconTheme: IconThemeData(color: Colors.white),
-            primaryColor: Color.fromARGB(255, 67, 66, 93),
-            floatingActionButtonTheme: FloatingActionButtonThemeData(
-                backgroundColor: Colors.white,
-                foregroundColor: Color.fromARGB(255, 67, 66, 93)),
-            appBarTheme: AppBarTheme(
-              centerTitle: true,
-            )),
-      ),
+      child: Builder(builder: (context) {
+        return GetMaterialApp(
+          getPages: [
+            GetPage(
+                name: '/home',
+                page: () => HomeView(),
+                transition: Transition.rightToLeft),
+            GetPage(
+                name: '/register',
+                page: () => Register(),
+                transition: Transition.leftToRight),
+            GetPage(
+                name: '/login',
+                page: () => Login(),
+                transition: Transition.fade),
+            GetPage(
+                name: '/community',
+                page: () => DepCommunity(),
+                transition: Transition.downToUp),
+            GetPage(
+                name: '/profile',
+                page: () => Profile(),
+                transition: Transition.downToUp),
+            GetPage(
+                name: '/noCommunity',
+                page: () => NoCommunity(),
+                transition: Transition.downToUp),
+            GetPage(
+                name: '/communityInfo',
+                page: () => CommunityInfo(),
+                transition: Transition.downToUp),
+            GetPage(
+                name: '/PostDetails',
+                page: () => PostDetails(),
+                transition: Transition.leftToRightWithFade),
+          ],
+          debugShowCheckedModeBanner: false,
+          initialRoute: home,
+          theme: ThemeData(
+              primarySwatch:
+                  createMaterialColor(Color.fromARGB(255, 67, 66, 93)),
+              bottomAppBarColor: Color.fromARGB(255, 67, 66, 93),
+              iconTheme: IconThemeData(color: Colors.white),
+              primaryColor: Color.fromARGB(255, 67, 66, 93),
+              floatingActionButtonTheme: FloatingActionButtonThemeData(
+                  backgroundColor: Colors.white,
+                  foregroundColor: Color.fromARGB(255, 67, 66, 93)),
+              appBarTheme: AppBarTheme(
+                centerTitle: true,
+              )),
+        );
+      }),
     );
   }
 

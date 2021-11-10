@@ -4,8 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:usm_mobile/community/services/CommunityService.dart';
-import 'package:usm_mobile/community/models/Community.dart';
-import 'package:usm_mobile/community/models/post_response.dart';
+import 'package:usm_mobile/community/models/ommunity_response.dart';
 
 part 'community_event.dart';
 part 'community_state.dart';
@@ -22,7 +21,7 @@ class CommunityBloc extends Bloc<CommunityEvent, CommunityState> {
     if (event is InitCommunity) {
       yield CommunityInitial();
       try {
-        Community community = await communityServiceImpl.getCommunity(
+        CommunityRespnse community = await communityServiceImpl.getCommunity(
             (await SharedPreferences.getInstance()).getInt("communityID"));
         yield CommunityFetched(community: community);
       } catch (e) {

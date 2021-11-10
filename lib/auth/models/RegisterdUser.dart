@@ -31,7 +31,7 @@ class Communinty {
   int id;
   String name;
   String description;
-  Null img;
+  String img;
 
   Communinty({this.id, this.name, this.description, this.img});
 

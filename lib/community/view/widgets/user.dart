@@ -13,15 +13,17 @@ class User extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: CircleAvatar(
-        backgroundColor: Color.fromARGB(255, 67, 66, 93),
+        backgroundColor: Colors.white,
         radius: 20,
         child: ClipOval(
-          child: img == null
+          child: img == null || img.contains('eu.ui-avatars.com')
               ? Image.asset(
-                  'assets/images/user.jpg',
+                  'assets/images/user.png',
+                  fit: BoxFit.fill,
                 )
               : CachedNetworkImage(
                   imageUrl: "$img",
+                  fit: BoxFit.fill,
                   placeholder: (context, url) => LoadingUsers(),
                   errorWidget: (context, url, error) => Icon(Icons.error),
                 ),

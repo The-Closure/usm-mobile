@@ -27,17 +27,28 @@ class _RegisterState extends State<Register> {
       ),
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 8),
-        child: SingleChildScrollView(
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Image.asset('assets/images/welcome.jpg'),
-                RegisterFormBase(
-                  child: RegisterForm(),
-                )
-              ]),
-        ),
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Expanded(
+                flex: 3,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Image.asset('assets/images/usm.png'),
+                ),
+              ),
+              Expanded(
+                flex: 4,
+                child: ListView(
+                  children: [
+                    RegisterFormBase(
+                      child: RegisterForm(),
+                    ),
+                  ],
+                ),
+              )
+            ]),
       ),
     );
   }

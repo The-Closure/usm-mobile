@@ -51,6 +51,8 @@ class PostBloc extends Bloc<PostEvent, PostState> {
           pageNo: event.pageNo);
       if (posts.length == 0) yield NullPostsPageState();
       yield PostPageFetchedState(postsResponse: posts);
+    } else if (event is ResetPostsState) {
+      yield PostInitial();
     }
   }
 }

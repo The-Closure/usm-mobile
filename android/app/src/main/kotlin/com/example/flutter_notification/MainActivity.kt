@@ -1,4 +1,4 @@
-package com.example.usm
+package org.closure.usm
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -65,7 +65,7 @@ class LoadingPosts extends StatelessWidget {
             // Padding(
             //   padding: const EdgeInsets.symmetric(vertical: 8.0),
             //   child: Image.asset(
-            //     'assets/images/welcome.jpg',
+            //     'assets/images/usm.png',
             //     fit: BoxFit.cover,
             //   ),
             // ),

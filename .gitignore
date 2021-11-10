@@ -2,6 +2,7 @@
 *.class
 *.log
 *.pyc
+./android/key.properties
 *.swp
 .DS_Store
 .atom/

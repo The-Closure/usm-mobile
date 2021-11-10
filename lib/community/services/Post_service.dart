@@ -4,8 +4,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:usm_mobile/community/models/post_response.dart';
 
 abstract class Postservice {
-  Future<List<PostResponse>> fetchPosts(int communityId);
+  Future<List<PostResponse>> fetchPosts(int communityId, {int pageNo = 0});
   Future<PostResponse> addPost(int userID, String value);
+  Future<PostResponse> fetchPost(int postID);
 }
 
 class PostServiceImpl extends Postservice {
@@ -14,8 +15,6 @@ class PostServiceImpl extends Postservice {
       {int pageNo = 0}) async {
     final userID = await SharedPreferences.getInstance()
         .then((value) => value.getInt('userID'));
-    print(
-        '$pageNo&pageSize=5&sortBy=id&communityID=$communityId&userID=$userID');
     var response = await http
         .get(Uri.parse(
             "http://164.68.96.30:7070/v2/api/posts/getposts?pageNo=$pageNo&pageSize=5&sortBy=id&communityID=$communityId&userID=$userID"))
@@ -24,11 +23,7 @@ class PostServiceImpl extends Postservice {
       List data = json.decode(utf8.decode(response.bodyBytes));
       List<PostResponse> list =
           data.map((e) => PostResponse.fromJson(e)).toList(growable: true);
-      print('${response.headers}');
-      print(pageNo);
-      list.forEach((element) {
-        print('${element.value}');
-      });
+
       return list;
     } else {
       throw Exception();
@@ -47,5 +42,23 @@ class PostServiceImpl extends Postservice {
     return PostResponse.fromJson(
       jsonDecode(response.body),
     );
+  }
+
+  @override
+  Future<PostResponse> fetchPost(int postID) async {
+    final userID = await SharedPreferences.getInstance()
+        .then((value) => value.getInt('userID'));
+    var response = await http
+        .get(Uri.parse(
+            "http://164.68.96.30:7070/v2/api/posts/getpost?postID=$postID"))
+        .timeout(Duration(seconds: 5));
+    if (response.statusCode == 200) {
+      Map data = json.decode(utf8.decode(response.bodyBytes));
+      PostResponse post = PostResponse.fromJson(data);
+
+      return post;
+    } else {
+      throw Exception();
+    }
   }
 }

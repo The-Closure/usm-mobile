@@ -27,3 +27,5 @@ class PagePosts extends PostEvent {
   int pageNo;
   PagePosts({this.pageNo});
 }
+
+class ResetPostsState extends PostEvent {}

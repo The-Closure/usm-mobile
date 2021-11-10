@@ -54,7 +54,6 @@ class _CommunityBodyState extends State<CommunityBody> {
               if (scrollNotification is ScrollEndNotification &&
                   scrollNotification.metrics.pixels ==
                       scrollNotification.metrics.maxScrollExtent) {
-                print('${scrollNotification.metrics.pixels}');
                 BlocProvider.of<PostBloc>(context)
                     .add(PagePosts(pageNo: pageNo += 1));
               }

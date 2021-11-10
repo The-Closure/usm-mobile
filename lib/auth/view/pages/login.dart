@@ -30,7 +30,7 @@ class _LoginState extends State<Login> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                Image.asset('assets/images/welcome.jpg'),
+                Image.asset('assets/images/usm.png'),
                 SignInFormBase(
                   child: LoginForm(),
                 )

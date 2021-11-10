@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:usm_mobile/community/models/post_response.dart';
 import 'package:usm_mobile/community/view/widgets/comment_button.dart';
 import 'package:usm_mobile/community/view/widgets/like_button.dart';
@@ -7,7 +8,7 @@ import 'package:usm_mobile/community/view/widgets/user.dart';
 class Post extends StatelessWidget {
   final PostResponse post;
   Post({Key key, this.post}) : super(key: key);
-
+  TextEditingController commentController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -51,11 +52,18 @@ class Post extends StatelessWidget {
               )
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: RichText(
-              text: TextSpan(
-                  style: TextStyle(color: Colors.black), text: '${post.value}'),
+          GestureDetector(
+            onTap: () => Get.toNamed(
+              '/PostDetails',
+              arguments: post,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: RichText(
+                text: TextSpan(
+                    style: TextStyle(color: Colors.black),
+                    text: '${post.value}'),
+              ),
             ),
           ),
           // Divider(
